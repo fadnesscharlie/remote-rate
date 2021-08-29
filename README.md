@@ -1,9 +1,21 @@
-# final-project
+# Remote Rate
 
-## [Cooperation Plan](Administrivia/CooperationPlan.md)
+## Contributors:
 
-## [Conflict Plan](Administrivia/ConflictPlan.md)
+* Charlie Fadness
+* Zach Winterton
+* Quentin Young
+* Phil Murphy
 
-## [Communication Plan](Administrivia/CommunicationPlan.md)
+## About This App
 
-## [Work/Git Plan](Administrivia/WorkPlan_Git.md)
+Unsure of whether it's worth it to take that job back in the office? Curious how much less you would need to make, to sustain a similar style of living, while working from home? This is the app you've been looking for. Tell us your location, job opportunities, and the type of vehicle you drive, and we'll let you know the cost of commuting, versus staying home
+
+
+#### [Cooperation Plan](Administrivia/CooperationPlan.md)
+
+#### [Conflict Plan](Administrivia/ConflictPlan.md)
+
+#### [Communication Plan](Administrivia/CommunicationPlan.md)
+
+#### [Work/Git Plan](Administrivia/WorkPlan_Git.md)
