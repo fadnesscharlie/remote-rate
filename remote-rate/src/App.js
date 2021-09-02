@@ -1,12 +1,16 @@
 import React from 'react';
 import './App.css';
 
-import Home from './components/Landing.js';
+// import Home from './components/Landing.js';
 import Profile from './components/Profile.js';
 import Compare from './components/Compare.js';
 import About from './components/AboutUs.js';
-// import Header from './components/Header';
+import Header from './components/Header';
 import Landing from './components/Landing.js';
+
+import { withAuth0 } from '@auth0/auth0-react';
+import Login from './components/Login';
+import LogoutButton from './components/LogoutButton'
 
 import {
   BrowserRouter as Router,
@@ -16,13 +20,17 @@ import {
 
 class App extends React.Component {
   render() {
+    const { user, isAuthenticated } = this.props.auth0;
     return (
       <>
-      <Router>
+        <Router>
           <Switch>
             <Route exact path="/">
-              {/* <Header /> */}
-              <Landing />
+              <Header />
+              {isAuthenticated ?
+                <> <LogoutButton /> <Landing /> <h3>{user.name}</h3> </> :
+                <Login />}
+              
             </Route>
             <Route exact path="/landing">
               <Landing />
@@ -39,10 +47,10 @@ class App extends React.Component {
           </Switch>
         </Router>
         <h1>App</h1>
-        </>
+      </>
       // Should only have components. No code is done here
     )
   }
 }
 
-export default App;
+export default withAuth0(App);
