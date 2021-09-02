@@ -1,11 +1,13 @@
 import React from 'react';
-import './Profile.css';
-
+// import './Profile.css';
+import Header from './Header';
 class Profile extends React.Component {
   render() {
     return (
-      <h1>Remote Rate</h1>
-
+      <>
+      <Header />
+      <h1>Profile</h1>
+      </>
       // if user is logged in, show information
       // If user logs out, take them back to the home page?
       //    Or not show information

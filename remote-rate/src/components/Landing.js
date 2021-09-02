@@ -1,11 +1,14 @@
 import React from 'react';
-import './Home.css';
+// import './Home.css';
+import Header from './Header';
 
 class Home extends React.Component {
   render() {
     return (
-      <h1>Remote Rate</h1>
-
+      <>
+      <Header />
+      <h1>Landing Page</h1>
+      </>
       // Header goes here
 
       // Log in button
