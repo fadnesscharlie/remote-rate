@@ -59,3 +59,6 @@ Wire Frame with Schema
 - APIGasPrice: int
 - usersCalculatedGasCost: int
 
+## Trello Link
+
+[Trello](https://trello.com/b/zcszi1ZW/remote-rate)
