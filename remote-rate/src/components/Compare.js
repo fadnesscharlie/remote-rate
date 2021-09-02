@@ -1,11 +1,14 @@
 import React from 'react';
-import './Compare.css';
+// import './Compare.css';
+import Header from './Header';
 
 class Compare extends React.Component {
   render() {
     return (
+      <>
+      <Header />
       <h1>Details and Comparison</h1>
-      
+      </>
       // Here we will do most of the math and functions
 
       // display 2 offers
