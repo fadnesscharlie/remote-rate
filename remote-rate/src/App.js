@@ -1,11 +1,9 @@
 import React from 'react';
-import './App.css';
+import './css/App.css';
 
-// import Home from './components/Landing.js';
 import Profile from './components/Profile.js';
 import Compare from './components/Compare.js';
 import About from './components/AboutUs.js';
-import Header from './components/Header';
 import Landing from './components/Landing.js';
 
 import { withAuth0 } from '@auth0/auth0-react';
@@ -26,11 +24,11 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/">
-              <Header />
-              {isAuthenticated ?
-                <> <LogoutButton /> <Landing /> <h3>{user.name}</h3> </> :
-                <Login />}
-              
+              {
+                isAuthenticated ?
+                  <> <Landing /> <LogoutButton /> <h3>{user.name}</h3> </> :
+                  <> <Landing /> <Login /> </>
+              }
             </Route>
             <Route exact path="/landing">
               <Landing />
