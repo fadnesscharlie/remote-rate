@@ -1,16 +1,10 @@
 import React from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
-
-// import './Home.css';
-// import Login from './Login';
-// import LogoutButton from './LogoutButton'
-
-// import './Home.css';
-import Header from './Header';
-
 import axios from 'axios';
 
-
+import Header from './Header';
+import Footer from './Footer';
+import '../css/Landing.css';
 
 class Landing extends React.Component {
   constructor(props) {
@@ -19,7 +13,6 @@ class Landing extends React.Component {
       working: '',
     }
   }
-
 
   componentDidMount = async () => {
     try {
@@ -33,7 +26,7 @@ class Landing extends React.Component {
         headers: { "Authorization": `Bearer ${jwt}` },
       }
 
-      console.log('config', config)
+      // console.log('config', config)
       const serverResponse = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/landing`, config);
  
       this.setState({
@@ -52,22 +45,21 @@ class Landing extends React.Component {
       return <h2>Loading please wait...</h2>
     } else {
       return (
-        <>
+        <body>
           <Header />
           <h1>Remote Rate Landing Page</h1>
  
-          {/* {isAuthenticated ? 
-          <> <LogoutButton /> <h3>{user.name}</h3> </>: 
-          <Login />} */}
+           {this.state.working ? this.state.working : 'This is working: false' }
 
-           {this.state.working ? this.state.working : 'false' }
+          <section className="sample">
+            User: Remote Rate
+            Home Address: 2901 3rd Ave #300, Seattle, WA 98121
+            Sample User and Savings
 
-          {
-            <>
-            <h2>Landing Page</h2>
-            </>
-            }
-        </>
+          </section>
+            
+            < Footer />
+        </body>
         // Header goes here
 
         // Log in button
