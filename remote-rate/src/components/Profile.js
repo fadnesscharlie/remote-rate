@@ -1,9 +1,9 @@
 import React from 'react';
 // import './Profile.css';
 import Header from './Header';
+import Compare from './Compare';
 import { Form, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
-
 
 class Profile extends React.Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class Profile extends React.Component {
       showEditModal: false,
     }
   }
+
   getLocation = async (e) => {
     //  function will use city stored in state to search api with axios
     e.preventDefault();
@@ -148,11 +149,24 @@ class Profile extends React.Component {
               <Button variant="primary" type="submit" onClick={this.getLocation}>Submit</Button>
               <Button variant="outline-danger" className="m-1" onClick={this.handleCloseForm}>
                 Close
-            </Button>
+              </Button>
             </Form>
           </Modal.Body></Modal> : ''
         }
 
+        <Compare
+          curSalary={this.state.userInfo.curSalary}
+          commuteDist={this.state.userInfo.commuteDist}
+          milesPerGal={this.state.userInfo.milesPerGal}
+        />
+
+        <aside>
+          Information from Profile:<br />
+          `Salary: ${parseInt(this.state.userInfo.curSalary)}`
+          `Commute Distance: ${parseInt(this.state.userInfo.commuteDist)}`
+          `MPG: ${parseInt(this.state.userInfo.milesPerGal)}`
+
+        </aside>
       </>
       // if user is logged in, show information
       // If user logs out, take them back to the home page?

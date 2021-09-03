@@ -11,9 +11,9 @@ class Compare extends React.Component {
 
   // Create a function that will return the cost of a years worth of driving 
   annualGasCost = (distance, gasAPI, carMPG) => {
-    distance = 15
-    gasAPI = 3.50;
-    carMPG = 25;
+    // distance = 15
+    // gasAPI = 3.50;
+    // carMPG = 25;
 
     // 25 / 15
     // divide MPG with miles to work
@@ -73,14 +73,24 @@ class Compare extends React.Component {
   // }
 
   render() {
-    let difference = this.compareOffer(10, 15)
-    let annualGas = this.annualGasCost(15, 3.50, 25)
+
+    // Preset because no values when first passed in.
+    let difference = this.compareOffer(parseInt(this.props.curSalary), 15)
+    let annualGas = this.annualGasCost(parseInt(this.props.commuteDist), 3.50, parseInt(this.props.milesPerGal))
     let comparedRemotely = this.compareRemote(difference, annualGas)
 
 
     return (
       <>
         <Header />
+
+        <aside>
+          Information from Compare:<br/>
+            `Salary: ${this.props.curSalary}`
+            `Commute Distance: ${this.props.commuteDist}`
+            `MPG: ${this.props.milesPerGal}`
+          
+        </aside>
         {/* <h1>Details and Comparison</h1> */}
 
         {/* If they want to compare the two offers, run this function */}
@@ -91,26 +101,26 @@ class Compare extends React.Component {
         Either one remote, vs in office, or two remote/in-office 
         */}
         <section className="offer1">
-          Offer Driving into work
+          Offer Driving into work<br />
 
-          Offer Price going into office: Offer
-          Gas Price: Gas API
+          Offer Price going into office: Offer<br/>
+          Gas Price: Gas API<br/>
           Distance to work : Distance
         </section>
 
         <section className="offer2">
-          Offer Remote
+          Offer Remote<br/>
 
           Offer Price working remote: Offer
         </section>
 
         {/* Summary at the bottom */}
         <section className="summary">
-          Summary
+          Summary<br/>
 
-          If Driving: Cost to work{annualGas}
-          Comparing 2 prices: {difference}
-          Comparing price and returning cost saved or lost while driving/remote{comparedRemotely}
+          If Driving: Cost to work {annualGas}<br/>
+          Comparing 2 prices: {difference}<br/>
+          Comparing price and returning cost saved or lost while driving/remote {comparedRemotely}<br/>
           StretchGoal-Driving time: Time spent/saved
         </section>
 

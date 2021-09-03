@@ -2,7 +2,8 @@
   text-align: center;
 }
 
-body {
+.body {
   background-color: cornsilk;
   font-family: 'Playfair Display', serif;
+  /* width: 960px; */
 }

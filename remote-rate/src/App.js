@@ -20,7 +20,7 @@ class App extends React.Component {
   render() {
     const { user, isAuthenticated } = this.props.auth0;
     return (
-      <body>
+      <body className="body">
         <Router>
           <Switch>
             <Route exact path="/">
