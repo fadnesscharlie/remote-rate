@@ -1,8 +1,10 @@
 import React from 'react';
 // import './Profile.css';
 import Header from './Header';
-import { Form, Button, Modal } from 'react-bootstrap';
+import Offer from './Offer';
+import { Form, Button, Modal, Card, Container, CardColumns } from 'react-bootstrap';
 import axios from 'axios';
+
 
 
 class Profile extends React.Component {
@@ -28,20 +30,23 @@ class Profile extends React.Component {
     //  function will use city stored in state to search api with axios
     e.preventDefault();
     try {
-      console.log(this.state.addressToSearch);
+      this.handleCloseForm();
+      console.log('address to search:', this.state.addressToSearch);
       let locationData = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.addressToSearch}&key=${process.env.REACT_APP_GOOGLE_GEOCODE_API}`);
-      console.log(locationData);
-      this.setState({
+
+      this.setState(prevState => ({
         userInfo: {
+          ...prevState.userInfo,
           email: this.props.email,
           homeLat: locationData.data.results[0].geometry.location.lat,
           homeLon: locationData.data.results[0].geometry.location.lng,
-        }
-      });
-      console.log(this.state.userInfo.email);
-      console.log(`Line 35: ${this.state.userInfo.homeLat}`);
+        },
+        addressToSearch: prevState.addressToSearch,
+        showEditModal: prevState.showEditModal,
+      }));
+      console.log('user info before sending to server:', this.state.userInfo);
       this.handleEditUser(this.state.userInfo);
-      this.handleCloseForm();
+
     } catch (err) {
 
       console.log(err);
@@ -49,44 +54,76 @@ class Profile extends React.Component {
   }
   handleCityInput = (e) => {
     e.preventDefault();
-    this.setState({
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+      },
       addressToSearch: e.target.value,
-    })
+      showEditModal: prevState.showEditModal,
+    }));
+    console.log(this.state);
   };
 
   handleEmployerInput = (e) => {
     e.preventDefault();
-    this.setState({
-      curSalary: e.target.value,
-    })
-  };
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        curEmployer: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
+  }
+
 
   handleSalaryInput = (e) => {
     e.preventDefault();
-    this.setState({
-      curSalary: e.target.value,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        curSalary: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
+
 
   handleIsRemote = (e) => {
     e.preventDefault();
-    this.setState({
-      curRemote: true,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        curRemote: true,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
 
   handleCurCommute = (e) => {
     e.preventDefault();
-    this.setState({
-      commuteDist: e.target.value,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        commuteDist: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
 
   handleMPG = (e) => {
     e.preventDefault();
-    this.setState({
-      milesPerGal: e.target.value,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        milesPerGal: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
 
   handleShowForm = () => {
@@ -101,6 +138,7 @@ class Profile extends React.Component {
   }
   handleEditUser = async (userData) => {
     try {
+      console.log('handle edit user state:', this.state.userInfo);
       let response = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/profile`, userData);
       console.log(response);
     } catch (error) {
@@ -108,11 +146,40 @@ class Profile extends React.Component {
     }
   }
   render() {
+    console.log(this.props);
     return (
       <>
         <Header />
         <h1>Profile</h1>
-        <Button onClick={this.handleShowForm}>Edit User Info</Button>
+        <Container>
+
+          <Card className="shadow-lg p-3 mb-5 bg-white rounded">
+            <Card.Header>
+              Current Information for {this.props.name}
+            </Card.Header>
+            <Card.Body>
+              Employer: {this.state.userInfo.curEmployer}
+              Salary: {this.state.userInfo.curSalary}
+              Remote?: {this.state.userInfo.curRemote ? 'yes' : 'no'}
+              Commute: {this.state.userInfo.commuteDist}
+            </Card.Body>
+            <Card.Footer>
+              {this.props.email}
+            </Card.Footer>
+          </Card>
+        </Container>
+
+        <Button className="m-3" onClick={this.handleShowForm}>Edit User Info</Button>
+        <Button className="m-3" variant='success' onClick={console.log('new offer clicked')}>New Offer</Button>
+        <Container className="m-3">
+          <CardColumns>
+          <Offer />
+          <Offer />
+          <Offer />
+          <Offer />
+
+          </CardColumns>
+        </Container>
 
         {this.state.showEditModal ? <Modal show={this.state.showEditModal}><Modal.Header>
           <h2>Create New Profile</h2>
@@ -148,7 +215,7 @@ class Profile extends React.Component {
               <Button variant="primary" type="submit" onClick={this.getLocation}>Submit</Button>
               <Button variant="outline-danger" className="m-1" onClick={this.handleCloseForm}>
                 Close
-            </Button>
+              </Button>
             </Form>
           </Modal.Body></Modal> : ''
         }
