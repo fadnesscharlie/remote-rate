@@ -14,6 +14,11 @@ class Profile extends React.Component {
         homeAddress: '',
         homeLat: '',
         homeLon: '',
+        curEmployer: '',
+        curSalary: 0,
+        curRemote: false,
+        commuteDist: 0,
+        milesPerGal: 0,
       },
       addressToSearch: '',
       showEditModal: false,
@@ -25,13 +30,17 @@ class Profile extends React.Component {
     try {
       console.log(this.state.addressToSearch);
       let locationData = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.addressToSearch}&key=${process.env.REACT_APP_GOOGLE_GEOCODE_API}`);
+      console.log(locationData);
       this.setState({
-        userInfo:{
+        userInfo: {
+          email: this.props.email,
           homeLat: locationData.data.results[0].geometry.location.lat,
           homeLon: locationData.data.results[0].geometry.location.lng,
         }
       });
-      console.log(this.state.userInfo);
+      console.log(this.state.userInfo.email);
+      console.log(`Line 35: ${this.state.userInfo.homeLat}`);
+      this.handleEditUser(this.state.userInfo);
       this.handleCloseForm();
     } catch (err) {
 
@@ -44,6 +53,42 @@ class Profile extends React.Component {
       addressToSearch: e.target.value,
     })
   };
+
+  handleEmployerInput = (e) => {
+    e.preventDefault();
+    this.setState({
+      curSalary: e.target.value,
+    })
+  };
+
+  handleSalaryInput = (e) => {
+    e.preventDefault();
+    this.setState({
+      curSalary: e.target.value,
+    })
+  };
+
+  handleIsRemote = (e) => {
+    e.preventDefault();
+    this.setState({
+      curRemote: true,
+    })
+  };
+
+  handleCurCommute = (e) => {
+    e.preventDefault();
+    this.setState({
+      commuteDist: e.target.value,
+    })
+  };
+
+  handleMPG = (e) => {
+    e.preventDefault();
+    this.setState({
+      milesPerGal: e.target.value,
+    })
+  };
+
   handleShowForm = () => {
     this.setState({
       showEditModal: true,
@@ -54,6 +99,14 @@ class Profile extends React.Component {
       showEditModal: false,
     })
   }
+  handleEditUser = async (userData) => {
+    try {
+      let response = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/profile`, userData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   render() {
     return (
       <>
@@ -62,21 +115,44 @@ class Profile extends React.Component {
         <Button onClick={this.handleShowForm}>Edit User Info</Button>
 
         {this.state.showEditModal ? <Modal show={this.state.showEditModal}><Modal.Header>
-          <h2>Your Home</h2>
+          <h2>Create New Profile</h2>
         </Modal.Header>
           <Modal.Body>
             <Form className='form'>
               <Form.Group>
                 <Form.Control onChange={this.handleCityInput} type="text" placeholder="Enter Home Address" />
-                <Button variant="primary" type="submit" onClick={this.getLocation}>Submit</Button>
               </Form.Group>
-            <Button variant="outline-danger" className="m-1" onClick={this.handleCloseForm}>
-              Close
+              <Form.Group>
+                <Form.Control onChange={this.handleEmployerInput} type="text" placeholder="Current Employer" />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control onChange={this.handleSalaryInput} type="text" placeholder="Current Salary" />
+              </Form.Group>
+              <Form.Group>
+                <Form.Check onChange={this.handleIsRemote} label="Currently Working Remote?" />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control onChange={this.handleCurCommute} type="text" placeholder="Current Commute in Miles" />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control onChange={this.handleMPG} as="select" >
+                  <option value='0' >Average Fuel Economy</option>
+                  <option value='15' >Less than 15</option>
+                  <option value='17.5'>15-20</option>
+                  <option value='22.5'>20-25</option>
+                  <option value='27.5'>25-30</option>
+                  <option value='32.5'>30-35</option>
+                  <option value='35'>35+</option>
+                </Form.Control>
+              </Form.Group>
+              <Button variant="primary" type="submit" onClick={this.getLocation}>Submit</Button>
+              <Button variant="outline-danger" className="m-1" onClick={this.handleCloseForm}>
+                Close
             </Button>
             </Form>
           </Modal.Body></Modal> : ''
-  }
-        
+        }
+
       </>
       // if user is logged in, show information
       // If user logs out, take them back to the home page?
