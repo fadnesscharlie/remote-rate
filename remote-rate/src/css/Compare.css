@@ -1,0 +1,20 @@
+.offer1 {
+  border: blue solid 4px;
+  /* margin: 50px; */
+  /* margin-right: 300px; */
+  width: 40%;
+  float: right;
+}
+
+.offer2 {
+  border: red solid 4px;
+  /* margin: 50px; */
+  width: 40%;
+  float: left;
+}
+
+.summary {
+  border: green solid 4px;
+  margin: 50px;
+  margin-top: 300px;
+}
