@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { Form, Button, Modal } from 'react-bootstrap';
+import LogoutButton from './LogoutButton';
 
 class OfferFormModal extends React.Component {
   constructor(props) {
@@ -11,19 +12,68 @@ class OfferFormModal extends React.Component {
         newSalary: 150000,
         newEmployer: 'Your Mom',
         newRemote: false,
-        newCommute: 12,
+        newLocation: '',
+        workLat: '',
+        workLon: '',
       },
+      banana: false,
       email: 'phillipdeanmurphy@gmail.com',
+    }
+  }
+
+  getNewLocation = async () => {
+    //  function will use city stored in state to search api with axios
+    try {
+      console.log('address to search:', this.state.offer.newLocation);
+      let newLocationData = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.offer.newLocation}&key=${process.env.REACT_APP_GOOGLE_GEOCODE_API}`)
+      let lat = newLocationData.data.results[0].geometry.location.lat
+      let lon = newLocationData.data.results[0].geometry.location.lng
+      return { lat, lon };
+      // console.log(`Lat ${lat} and lon ${lon}`);
+      // console.log('The lat from google api', newLocationData.data.results[0].geometry.location.lat);
+      // this.setState({
+      //   offer: {
+      //     workLat: newLocationData.data.results[0].geometry.location.lat,
+      //     workLon: newLocationData.data.results[0].geometry.location.lng,
+      //   },
+      //   banana: true,
+      //   email: this.state.email,
+      // }, () => console.log('state of offer' , this.state));
+      // console.log('user info before sending to server:', this.state)
+    } catch (err) {
+
+      console.log(err);
     }
   }
 
   handleSubmitOffer = async (e) => {
     this.props.handleCloseOfferForm();
     e.preventDefault();
+    console.log(this.state.offer);
     try {
-      console.log('handle edit user state:');
-      let response = await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer`, this.state.offer);
-      console.log(response);
+      let lat;
+      let lon;
+      let dataObject = this.getNewLocation();
+      console.log('data object', dataObject);
+      Promise.resolve(dataObject).then(res => {
+        lat = res.lat;
+        lon = res.lon;
+
+        console.log('my mom', lat, lon);
+        let data = {
+          newSalary: this.state.offer.newSalary,
+          newEmployer: this.state.offer.newEmployer,
+          newRemote: this.state.offer.newRemote,
+          newLocation: this.state.offer.newLocation,
+          workLat: lat,
+          workLon: lon,
+        }
+        console.log('you mother', data)
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer`, data);
+      }).then(res => {
+        console.log(`Success`);
+      })
+      // console.log('handle edit user state' ,this.state.offer);
     } catch (error) {
       console.log(error);
     }
@@ -64,12 +114,12 @@ class OfferFormModal extends React.Component {
     }));
   };
 
-  handleNewCommute = (e) => {
+  handleNewLocation = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
       offer: {
         ...prevState.offer,
-        newCommute: e.target.value,
+        newLocation: e.target.value,
       },
       email: prevState.email,
     }));
@@ -82,7 +132,7 @@ class OfferFormModal extends React.Component {
         <Modal.Header>
         </Modal.Header>
         <Modal.Body>
-          <Form className='form'>
+          <Form className='form' onSubmit={this.handleSubmitOffer}>
             <Form.Group>
               <Form.Control onChange={this.handleNewEmployerInput} type="text" placeholder="Company of Offer" />
             </Form.Group>
@@ -93,9 +143,9 @@ class OfferFormModal extends React.Component {
               <Form.Check onChange={this.handleIsNewRemote} label="Remote Offer?" />
             </Form.Group>
             <Form.Group>
-              <Form.Control onChange={this.handleNewCommute} type="text" placeholder="New Commute in Miles" />
+              <Form.Control onChange={this.handleNewLocation} type="text" placeholder="New Offer Address" />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={this.handleSubmitOffer} >Submit</Button>
+            <Button variant="primary" type="submit">Submit</Button>
             <Button variant="outline-danger" className="m-1" onClick={this.props.handleCloseOfferForm}>
               Close
             </Button>
