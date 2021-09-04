@@ -35,7 +35,7 @@ class App extends React.Component {
             </Route>
             <Route exact path="/profile">
               {isAuthenticated ?
-                <Profile email={user.email} /> :
+                <Profile email={user.email} name={user.name} /> :
                 <Profile />
               }
             </Route>
