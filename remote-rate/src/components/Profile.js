@@ -2,6 +2,7 @@ import React from 'react';
 // import './Profile.css';
 import Header from './Header';
 import Offer from './Offer';
+import OfferFormModal from './OfferFormModal';
 import { Form, Button, Modal, Card, Container, CardColumns } from 'react-bootstrap';
 import Compare from './Compare';
 
@@ -29,6 +30,7 @@ class Profile extends React.Component {
       },
       addressToSearch: '',
       showEditModal: false,
+      showOfferModal: false,
     }
   }
 
@@ -146,6 +148,20 @@ class Profile extends React.Component {
       showEditModal: true,
     })
   }
+
+  handleShowOfferForm = () => {
+    console.log('testing here');
+    this.setState ({
+      showOfferModal: true,
+    })
+  }
+
+  handleCloseOfferForm = () => {
+    this.setState ({
+      showOfferModal: false,
+    })
+  }
+
   handleCloseForm = () => {
     this.setState({
       showEditModal: false,
@@ -162,8 +178,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    
+
     return (
       <>
         <Header />
@@ -187,7 +202,7 @@ class Profile extends React.Component {
         </Container>
 
         <Button className="m-3" onClick={this.handleShowForm}>Edit User Info</Button>
-        <Button className="m-3" variant='success' onClick={console.log('new offer clicked')}>New Offer</Button>
+        <Button className="m-3" variant='success' onClick= {this.handleShowOfferForm}>New Offer</Button>
         <Container className="m-3">
           <CardColumns>
             <Offer />
@@ -242,6 +257,13 @@ class Profile extends React.Component {
           commuteDist={this.state.userInfo.commuteDist}
           milesPerGal={this.state.userInfo.milesPerGal}
           curRemote={this.state.userInfo.curRemote}
+
+        />
+        {this.state.showOfferModal ? 
+        <OfferFormModal 
+        showOfferModal = {this.state.showOfferModal}
+        handleCloseOfferForm = {this.handleCloseOfferForm}
+        /> : '' }
 
         />
         <Footer />
