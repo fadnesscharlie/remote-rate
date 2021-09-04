@@ -2,3 +2,8 @@
   text-align: center;
 }
 
+.body {
+  background-color: cornsilk;
+  font-family: 'Playfair Display', serif;
+  /* width: 960px; */
+}

@@ -20,7 +20,7 @@ class App extends React.Component {
   render() {
     const { user, isAuthenticated } = this.props.auth0;
     return (
-      <>
+      <body className="body">
         <Router>
           <Switch>
             <Route exact path="/">
@@ -47,8 +47,8 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
-        <h1>App</h1>
-      </>
+        {/* <h1>App</h1> */}
+      </body>
       // Should only have components. No code is done here
     )
   }
