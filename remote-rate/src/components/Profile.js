@@ -4,6 +4,8 @@ import Header from './Header';
 import Compare from './Compare';
 import { Form, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import Footer from './Footer'
+
 
 class Profile extends React.Component {
   constructor(props) {
@@ -50,44 +52,76 @@ class Profile extends React.Component {
   }
   handleCityInput = (e) => {
     e.preventDefault();
-    this.setState({
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+      },
       addressToSearch: e.target.value,
-    })
+      showEditModal: prevState.showEditModal,
+    }));
+    console.log(this.state);
   };
 
   handleEmployerInput = (e) => {
     e.preventDefault();
-    this.setState({
-      curSalary: e.target.value,
-    })
-  };
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        curEmployer: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
+  }
+
 
   handleSalaryInput = (e) => {
     e.preventDefault();
-    this.setState({
-      curSalary: e.target.value,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        curSalary: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
+
 
   handleIsRemote = (e) => {
     e.preventDefault();
-    this.setState({
-      curRemote: true,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        curRemote: true,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
 
   handleCurCommute = (e) => {
     e.preventDefault();
-    this.setState({
-      commuteDist: e.target.value,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        commuteDist: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
 
   handleMPG = (e) => {
     e.preventDefault();
-    this.setState({
-      milesPerGal: e.target.value,
-    })
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        milesPerGal: e.target.value,
+      },
+      addressToSearch: prevState.addressToSearch,
+      showEditModal: prevState.showEditModal,
+    }));
   };
 
   handleShowForm = () => {
@@ -108,6 +142,7 @@ class Profile extends React.Component {
       console.log(error);
     }
   }
+
   render() {
     return (
       <>
@@ -158,15 +193,11 @@ class Profile extends React.Component {
           curSalary={this.state.userInfo.curSalary}
           commuteDist={this.state.userInfo.commuteDist}
           milesPerGal={this.state.userInfo.milesPerGal}
+          curRemote={this.state.userInfo.curRemote}
         />
 
-        <aside>
-          Information from Profile:<br />
-          `Salary: ${parseInt(this.state.userInfo.curSalary)}`
-          `Commute Distance: ${parseInt(this.state.userInfo.commuteDist)}`
-          `MPG: ${parseInt(this.state.userInfo.milesPerGal)}`
+        <Footer />
 
-        </aside>
       </>
       // if user is logged in, show information
       // If user logs out, take them back to the home page?

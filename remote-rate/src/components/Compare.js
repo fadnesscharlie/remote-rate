@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from './Header';
-import Footer from './Footer'
 import '../css/Compare.css';
 
 // import { useHistory } from 'react-router-dom';
@@ -30,16 +28,16 @@ class Compare extends React.Component {
     let annualCost = costPerDay * 261;
     return annualCost;
   }
-  
+
   // ###### Example: ######## 
   // 20 MPG divide 25 miles to work
   // returns 1.25 gallons to work
   // multiply by 2, returns 2.5 gallons to and from work
   // multiply gas API $3.50 x 2.5
   // return 8.75 dollars per day
-  
+
   // annual cost with 261 days of work = 2,283.75 dollars spent on gas going to and from work 
-  
+
   // ################################################################################################################################################
 
   // Create a function that will compare the two salaries
@@ -48,7 +46,7 @@ class Compare extends React.Component {
     let difference = offer1 - offer2;
     return Math.abs(difference);
   }
-  
+
   // Comparing a remote vs non remote job
   // This takes in two offers to compare, then the price of gas to drive to work
   // ############# ---- Must have gas cost ------ ###############
@@ -79,17 +77,31 @@ class Compare extends React.Component {
     let annualGas = this.annualGasCost(parseInt(this.props.commuteDist), 3.50, parseInt(this.props.milesPerGal))
     let comparedRemotely = this.compareRemote(difference, annualGas)
 
+    // let remoteWoring =
+    //   'If Driving: Cost to work' + annualGas + <br /> +
+    //   'Comparing 2 prices: ' + difference + <br /> +
+    //   'Comparing price and returning cost saved or lost while' +
+    //   'driving/remote' + comparedRemotely + <br /> +
+    //   'StretchGoal-Driving time: Time spent/saved'
 
+    // let notRemoteWorking =
+    //   'If Driving: Cost to work' + annualGas +
+    //   'Comparing 2 prices: ' + difference +
+    //   'Comparing price and returning cost saved or lost while' +
+    //   'driving/remote' + comparedRemotely +
+    //   'StretchGoal-Driving time: Time spent/saved'
     return (
       <>
-        <Header />
+        {/* <Header /> */}
 
         <aside>
-          Information from Compare:<br/>
-            `Salary: ${this.props.curSalary}`
-            `Commute Distance: ${this.props.commuteDist}`
-            `MPG: ${this.props.milesPerGal}`
-          
+          Information from Compare:<br />
+          `Salary: ${this.props.curSalary}`
+          `Commute Distance: ${this.props.commuteDist}`
+          `MPG: ${this.props.milesPerGal}`
+          `Remote: {this.props.curRemote ? 'true' : 'false'}`
+          {console.log('remote?: ', this.props.curRemote)}
+
         </aside>
         {/* <h1>Details and Comparison</h1> */}
 
@@ -100,34 +112,47 @@ class Compare extends React.Component {
         display 2 offers
         Either one remote, vs in office, or two remote/in-office 
         */}
-        <section className="offer1">
-          Offer Driving into work<br />
+        <p className="offer1">
+          <p className="offer10">
+            Offer Driving into work<br />
 
-          Offer Price going into office: Offer<br/>
-          Gas Price: Gas API<br/>
-          Distance to work : Distance
-        </section>
+            Offer Price going into office: Offer<br />
+            Gas Price: Gas API<br />
+            Distance to work : Distance
 
-        <section className="offer2">
-          Offer Remote<br/>
+          </p>
+        </p>
 
+        <p className="offer2">
+          Offer Remote<br />
+          {this.props.curRemote ? 'Currently Remote' : 'Currently Not Remote'}<br />
           Offer Price working remote: Offer
-        </section>
+        </p>
 
         {/* Summary at the bottom */}
-        <section className="summary">
-          Summary<br/>
+        <p className="summary">
+          Summary<br />
 
-          If Driving: Cost to work {annualGas}<br/>
-          Comparing 2 prices: {difference}<br/>
-          Comparing price and returning cost saved or lost while driving/remote {comparedRemotely}<br/>
-          StretchGoal-Driving time: Time spent/saved
-        </section>
+          {
+            this.props.curRemote ?
+              // If working Remote
+              <p>If you had to Drive: Cost to drive to work would be: {annualGas} annually <br />
+                The difference between your two offers is:  {difference} <br />
+                {comparedRemotely}<br />
+                StretchGoal-Driving time: Time spent/saved'</p> :
+
+              // If not working Remote
+              <p>Driving to work cost you {annualGas} annually <br />
+                The difference inbetween your offers is {difference} <br />
+                {comparedRemotely} <br />
+                StretchGoal-Driving time: Time spent/saved'</p>
+          }
+
+        </p>
 
 
-        <Footer />
       </>
-      
+
 
       //###### Modals #######
 
