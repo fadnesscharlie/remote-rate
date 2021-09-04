@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/Compare.css';
 
-// import { useHistory } from 'react-router-dom';
+
 
 class Compare extends React.Component {
 
@@ -29,15 +29,6 @@ class Compare extends React.Component {
     return annualCost;
   }
 
-  // ###### Example: ######## 
-  // 20 MPG divide 25 miles to work
-  // returns 1.25 gallons to work
-  // multiply by 2, returns 2.5 gallons to and from work
-  // multiply gas API $3.50 x 2.5
-  // return 8.75 dollars per day
-
-  // annual cost with 261 days of work = 2,283.75 dollars spent on gas going to and from work 
-
   // ################################################################################################################################################
 
   // Create a function that will compare the two salaries
@@ -63,37 +54,15 @@ class Compare extends React.Component {
     }
   }
 
-  // Trying to make it where once they click a button it will redirect them somewhere else
-
-  // routeChange = (props) => {
-  //   let history = useHistory();
-  //   props.history.push("/Profile");
-  // }
-
   render() {
-
+ 
     // Preset because no values when first passed in.
     let difference = this.compareOffer(parseInt(this.props.curSalary), 15)
     let annualGas = this.annualGasCost(parseInt(this.props.commuteDist), 3.50, parseInt(this.props.milesPerGal))
     let comparedRemotely = this.compareRemote(difference, annualGas)
 
-    // let remoteWoring =
-    //   'If Driving: Cost to work' + annualGas + <br /> +
-    //   'Comparing 2 prices: ' + difference + <br /> +
-    //   'Comparing price and returning cost saved or lost while' +
-    //   'driving/remote' + comparedRemotely + <br /> +
-    //   'StretchGoal-Driving time: Time spent/saved'
-
-    // let notRemoteWorking =
-    //   'If Driving: Cost to work' + annualGas +
-    //   'Comparing 2 prices: ' + difference +
-    //   'Comparing price and returning cost saved or lost while' +
-    //   'driving/remote' + comparedRemotely +
-    //   'StretchGoal-Driving time: Time spent/saved'
     return (
       <>
-        {/* <Header /> */}
-
         <aside>
           Information from Compare:<br />
           `Salary: ${this.props.curSalary}`
@@ -103,10 +72,6 @@ class Compare extends React.Component {
           {console.log('remote?: ', this.props.curRemote)}
 
         </aside>
-        {/* <h1>Details and Comparison</h1> */}
-
-        {/* If they want to compare the two offers, run this function */}
-        {/* {this.compareRemote(difference, annualGas)} */}
 
         {/* 
         display 2 offers
@@ -147,33 +112,8 @@ class Compare extends React.Component {
                 {comparedRemotely} <br />
                 StretchGoal-Driving time: Time spent/saved'</p>
           }
-
         </p>
-
-
       </>
-
-
-      //###### Modals #######
-
-      // Here we want to be able to Link a modal
-
-      // Create our first Offer.
-      // In that modal we want a possible of:
-      //    Drop down of Car MPG
-      //    Enter Distance from home and work
-      //    Salary Offer
-
-      // ################################################################################################################################################
-
-      // Create a button to go back to their profile after submitting data.
-      //    Maybe make them choose to go their profile or add another?
-
-      // ################################################################################################################################################
-
-      // Display data from both offers and make a summary from the numbers lists
-
-
     )
   }
 }
