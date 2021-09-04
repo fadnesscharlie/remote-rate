@@ -4,13 +4,15 @@ import '../css/Footer.css';
 class Footer extends React.Component {
   render() {
     return (
-      <footer>
+      <footer className="footer">
       {/* <h1>Footer</h1> */}
-      <aside>
+      <aside className="copyright">
         &copy;Remote Rate
       </aside>
-      <section>
-      <a href="#">
+
+      <section className="contact">
+        <a href="#">
+
         Contact Us
       </a>
       </section>

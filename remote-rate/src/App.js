@@ -20,7 +20,7 @@ class App extends React.Component {
   render() {
     const { user, isAuthenticated } = this.props.auth0;
     return (
-      <>
+      <body className="body">
         <Router>
         <Navbar/>
           <Switch>
@@ -35,7 +35,10 @@ class App extends React.Component {
               <Landing />
             </Route>
             <Route exact path="/profile">
-              <Profile />
+              {isAuthenticated ?
+                <Profile email={user.email} name={user.name} /> :
+                <Profile />
+              }
             </Route>
             <Route exact path="/compare">
               <Compare />
@@ -45,8 +48,8 @@ class App extends React.Component {
             </Route>
           </Switch>
         </Router>
-        <h1>App</h1>
-      </>
+        {/* <h1>App</h1> */}
+      </body>
       // Should only have components. No code is done here
     )
   }

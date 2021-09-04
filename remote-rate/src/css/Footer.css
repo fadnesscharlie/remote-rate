@@ -1,4 +1,4 @@
-footer {
+.footer {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -6,7 +6,7 @@ footer {
   background:#F5F1E3;
 }
 
-aside {
+.copyright {
   font-size: large;
   margin-top: 15px;
   color: #1B9AAA;
@@ -14,7 +14,7 @@ aside {
   margin-left: 10px;
 }
 
-section {
+.contact {
   margin-top: 15px;
   font-size: large;
   position: absolute;
