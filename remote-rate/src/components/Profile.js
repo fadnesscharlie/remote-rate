@@ -3,7 +3,10 @@ import React from 'react';
 import Header from './Header';
 import Offer from './Offer';
 import { Form, Button, Modal, Card, Container, CardColumns } from 'react-bootstrap';
+import Compare from './Compare';
+
 import axios from 'axios';
+import Footer from './Footer'
 
 
 
@@ -26,6 +29,7 @@ class Profile extends React.Component {
       showEditModal: false,
     }
   }
+
   getLocation = async (e) => {
     //  function will use city stored in state to search api with axios
     e.preventDefault();
@@ -145,6 +149,7 @@ class Profile extends React.Component {
       console.log(error);
     }
   }
+
   render() {
     console.log(this.props);
     return (
@@ -219,6 +224,15 @@ class Profile extends React.Component {
             </Form>
           </Modal.Body></Modal> : ''
         }
+
+        <Compare
+          curSalary={this.state.userInfo.curSalary}
+          commuteDist={this.state.userInfo.commuteDist}
+          milesPerGal={this.state.userInfo.milesPerGal}
+          curRemote={this.state.userInfo.curRemote}
+        />
+
+        <Footer />
 
       </>
       // if user is logged in, show information

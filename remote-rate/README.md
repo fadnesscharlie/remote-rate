@@ -32,17 +32,17 @@ Application Start Up Docs
 
 Here we have our Data Flow.In our Data Bases we will use Google Maps API and a gas API. With Google Maps we will be able to grab the home and work address of the user. Google Maps will be able to transfer those into latitude and longitude for us to use into our Gas API. The Gas API will bring back the closest gas station with the price of the gas to use in our application.
 
-![Data Flow](img/DataBaseSchema.png)
-![Data Flow With Database](img/domainModelingDataBase.png)
+![Data Flow](src/img/DataBaseSchema.png)
+![Data Flow With Database](src/img/domainModelingDataBase.png)
 
 Domain Modeling
-![UML](img/DomainModeling.png)
+![UML](src/img/DomainModeling.png)
 
 Story Cards
-![Story Cards](img/storyCardsRemoteRate.png)
+![Story Cards](src/img/storyCardsRemoteRate.png)
 
 Wire Frame with Schema
-![Wire Frame](img/wireFrameRemoteRate.png)
+![Wire Frame](src/img/wireFrameRemoteRate.png)
 
 ## Data Base
 

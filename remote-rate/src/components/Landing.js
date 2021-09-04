@@ -28,7 +28,7 @@ class Landing extends React.Component {
 
       // console.log('config', config)
       const serverResponse = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/landing`, config);
- 
+
       this.setState({
         working: `This is working: ${serverResponse.data.email_verified}`,
       })
@@ -45,7 +45,7 @@ class Landing extends React.Component {
       return <h2>Loading please wait...</h2>
     } else {
       return (
-        <body>
+        <>
           <Header />
           <h1>Remote Rate Landing Page</h1>
  
@@ -59,7 +59,7 @@ class Landing extends React.Component {
           </section>
             
             < Footer />
-        </body>
+        </>
         // Header goes here
 
         // Log in button
