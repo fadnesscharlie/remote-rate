@@ -8,7 +8,7 @@ import Compare from './Compare';
 import axios from 'axios';
 import Footer from './Footer'
 
-
+import getDistance from 'geolib/es/getDistance';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -17,8 +17,10 @@ class Profile extends React.Component {
       userInfo: {
         email: '',
         homeAddress: '',
-        homeLat: '',
-        homeLon: '',
+        homeLat: 51.5103, // preset numbers
+        homeLon: 7.49347,
+        workLat: 47.6062,
+        workLon: 122.3321,
         curEmployer: '',
         curSalary: 0,
         curRemote: false,
@@ -108,10 +110,19 @@ class Profile extends React.Component {
 
   handleCurCommute = (e) => {
     e.preventDefault();
+
+    // ############################################ 
+    // Changed set state!!!!
+
+
+    let distanceToWork = getDistance(
+      { latitude: this.state.userInfo.homeLat, longitude: this.state.userInfo.homeLon },
+      { latitude: this.state.userInfo.workLat, longitude: this.state.userInfo.workLon }
+    )
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
-        commuteDist: e.target.value,
+        commuteDist: distanceToWork,
       },
       addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
@@ -152,6 +163,7 @@ class Profile extends React.Component {
 
   render() {
     console.log(this.props);
+    
     return (
       <>
         <Header />
@@ -178,10 +190,10 @@ class Profile extends React.Component {
         <Button className="m-3" variant='success' onClick={console.log('new offer clicked')}>New Offer</Button>
         <Container className="m-3">
           <CardColumns>
-          <Offer />
-          <Offer />
-          <Offer />
-          <Offer />
+            <Offer />
+            <Offer />
+            <Offer />
+            <Offer />
 
           </CardColumns>
         </Container>
@@ -230,11 +242,11 @@ class Profile extends React.Component {
           commuteDist={this.state.userInfo.commuteDist}
           milesPerGal={this.state.userInfo.milesPerGal}
           curRemote={this.state.userInfo.curRemote}
+
         />
-
         <Footer />
-
       </>
+
       // if user is logged in, show information
       // If user logs out, take them back to the home page?
       //    Or not show information
@@ -253,7 +265,6 @@ class Profile extends React.Component {
       // Show most recently selected Data from State
       // Display thier savings from their selected offer
 
-      // Have a button to go to Details and Comparison page
 
     )
   }
