@@ -47,7 +47,7 @@ class Landing extends React.Component {
       return (
         <body>
           <Header />
-          <h1>Remote Rate Landing Page</h1>
+          <h1 className= 'h1'>  Remote Rate Landing Page</h1>
  
            {this.state.working ? this.state.working : 'This is working: false' }
 

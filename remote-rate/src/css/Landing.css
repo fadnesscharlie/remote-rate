@@ -1,8 +1,12 @@
 body {
-  background-color: cornsilk;
+  background-color: #DDDBCB;
   font-family: 'Playfair Display', serif;
 }
 
 .sample {
   background-color: darkkhaki;
+}
+
+.h1 {
+  margin-left: 200px;
 }

@@ -8,13 +8,13 @@ import Landing from './components/Landing.js';
 
 import { withAuth0 } from '@auth0/auth0-react';
 import Login from './components/Login';
-import LogoutButton from './components/LogoutButton'
-
+import LogoutButton from './components/LogoutButton';
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
+import Navbar from './components/Navbar';
 
 class App extends React.Component {
   render() {
@@ -22,6 +22,7 @@ class App extends React.Component {
     return (
       <>
         <Router>
+        <Navbar/>
           <Switch>
             <Route exact path="/">
               {
