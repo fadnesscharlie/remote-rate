@@ -5,13 +5,16 @@ import '../css/Compare.css';
 
 class Compare extends React.Component {
 
+
+
+
   // ################################################################################################################################################
 
   // Create a function that will return the cost of a years worth of driving 
   annualGasCost = (distance, gasAPI, carMPG) => {
-    // distance = 15
-    // gasAPI = 3.50;
-    // carMPG = 25;
+    distance = 15
+    gasAPI = 3.50;
+    carMPG = 25;
 
     // 25 / 15
     // divide MPG with miles to work
@@ -33,9 +36,11 @@ class Compare extends React.Component {
 
   // Create a function that will compare the two salaries
   compareOffer = (offer1, offer2) => {
+    offer1 = 1000
+    offer2 = 2000
     // Take in both offer prices, return the difference
     let difference = offer1 - offer2;
-    return Math.abs(difference);
+    return difference;
   }
 
   // Comparing a remote vs non remote job
@@ -57,19 +62,29 @@ class Compare extends React.Component {
   render() {
  
     // Preset because no values when first passed in.
-    let difference = this.compareOffer(parseInt(this.props.curSalary), 15)
-    let annualGas = this.annualGasCost(parseInt(this.props.commuteDist), 3.50, parseInt(this.props.milesPerGal))
+
+    // compare offer takes in offer 1 and offer 2
+    let difference = this.compareOffer(parseInt(this.props.userInfo.curSalary), 
+    // parseInt(this.props.userInfo.newJob.newSalary)
+    99999999
+      )
+
+    // annualGasCost takes in commute, gas, MPG
+    let annualGas = this.annualGasCost(parseInt(this.props.userInfo.commuteDist), 3.50, parseInt(this.props.userInfo.milesPerGal))
+
+    // CompareRemote takes in results from above functions
     let comparedRemotely = this.compareRemote(difference, annualGas)
+
+
 
     return (
       <>
         <aside>
           Information from Compare:<br />
-          `Salary: ${this.props.curSalary}`
-          `Commute Distance: ${this.props.commuteDist}`
-          `MPG: ${this.props.milesPerGal}`
-          `Remote: {this.props.curRemote ? 'true' : 'false'}`
-          {console.log('remote?: ', this.props.curRemote)}
+          `Salary: ${this.props.userInfo.curSalary}`
+          `Commute Distance: ${this.props.userInfo.commuteDist}`
+          `MPG: ${this.props.userInfo.milesPerGal}`
+          `Remote: {this.props.userInfo.curRemote ? 'true' : 'false'}`
 
         </aside>
 
@@ -90,7 +105,7 @@ class Compare extends React.Component {
 
         <p className="offer2">
           Offer Remote<br />
-          {this.props.curRemote ? 'Currently Remote' : 'Currently Not Remote'}<br />
+          {this.props.userInfo.curRemote ? 'Currently Remote' : 'Currently Not Remote'}<br />
           Offer Price working remote: Offer
         </p>
 
@@ -99,7 +114,7 @@ class Compare extends React.Component {
           Summary<br />
 
           {
-            this.props.curRemote ?
+            this.props.userInfo.curRemote ?
               // If working Remote
               <p>If you had to Drive: Cost to drive to work would be: {annualGas} annually <br />
                 The difference between your two offers is:  {difference} <br />
@@ -107,9 +122,10 @@ class Compare extends React.Component {
                 StretchGoal-Driving time: Time spent/saved'</p> :
 
               // If not working Remote
-              <p>Driving to work cost you {annualGas} annually <br />
+              <p>Driving to work will cost you {annualGas} annually <br />
                 The difference inbetween your offers is {difference} <br />
                 {comparedRemotely} <br />
+                Distance from two locations: {this.props.userInfo.commuteDist}<br />
                 StretchGoal-Driving time: Time spent/saved'</p>
           }
         </p>
