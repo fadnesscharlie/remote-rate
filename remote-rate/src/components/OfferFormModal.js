@@ -10,14 +10,13 @@ class OfferFormModal extends React.Component {
     this.state = {
       offer: {
         newSalary: 150000,
-        newEmployer: 'Your Mom',
+        newEmployer: 'Best Place of Work',
         newRemote: false,
         newLocation: '',
         workLat: '',
         workLon: '',
       },
-      banana: false,
-      email: 'phillipdeanmurphy@gmail.com',
+      email: '',
     }
   }
 
@@ -69,7 +68,8 @@ class OfferFormModal extends React.Component {
           workLon: lon,
         }
         console.log('you mother', data)
-        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer`, data);
+        console.log('ID :',this.props.id)
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.props.id}`, data);
       }).then(res => {
         console.log(`Success`);
       })
