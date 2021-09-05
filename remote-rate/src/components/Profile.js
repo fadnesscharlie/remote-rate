@@ -7,7 +7,7 @@ import { Form, Button, Modal, Card, Container, CardColumns } from 'react-bootstr
 import Compare from './Compare';
 
 import axios from 'axios';
-// import Footer from './Footer'
+import Footer from './Footer'
 
 import getDistance from 'geolib/es/getDistance';
 
@@ -278,13 +278,13 @@ class Profile extends React.Component {
         <Button className="m-3" variant='success' onClick={this.handleShowOfferForm}>New Offer</Button>
         <Container className="m-3">
           <CardColumns>
-            {this.state.userInfo.newJob.map(job => (
+            {/* {this.state.userInfo.newJob.map(job => (
               <Offer 
               employer = {job.newEmployer}
               salary = {job.newSalary}
               remote = {job.newRemote}
               location = {job.newLocation}/>
-             ))}
+             ))} */}
 
             
 
@@ -364,6 +364,9 @@ class Profile extends React.Component {
             newJob={this.state.userInfo.newJob}
             showOfferModal={this.state.showOfferModal}
             handleCloseOfferForm={this.handleCloseOfferForm}
+            userInfo={this.state.userInfo}
+            getWorkLocation2={this.getWorkLocation2}
+            handleEditUser={this.handleEditUser}
           /> : ''}
 
 
