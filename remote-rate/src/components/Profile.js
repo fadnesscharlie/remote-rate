@@ -16,17 +16,18 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       userInfo: {
-        email: '',
+        email: 'youngqp3@gmail.com',
         homeLat: '', // preset numbers
         homeLon: '',
-        // workLat: 47.6062,
-        // workLon: 122.3321,
+        workLat: '11111',
+        workLon: '222222',
         curEmployer: '',
         curSalary: '',
         curRemote: false,
         commuteDist: '',
         milesPerGal: '',
         newJob: [],
+        _id: '',
       },
       addressToSearch: '',
       showEditModal: false,
@@ -46,6 +47,7 @@ class Profile extends React.Component {
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
     const allData = response.data;
+    console.log('All data from server:', allData);
     allData.map(user => {
       if (user.email === this.props.email) {
         console.log(user);
@@ -106,8 +108,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   }
-
-
   handleSalaryInput = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -119,8 +119,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
-
   handleIsRemote = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -132,7 +130,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
   handleCurCommute = (e) => {
     e.preventDefault();
 
@@ -153,7 +150,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
   handleMPG = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -165,7 +161,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
   handleShowForm = () => {
     this.setState({
       showEditModal: true,
@@ -279,16 +274,18 @@ class Profile extends React.Component {
           </Modal.Body></Modal> : ''
         }
 
-        <Compare
+        {/* <Compare
           curSalary={this.state.userInfo.curSalary}
           commuteDist={this.state.userInfo.commuteDist}
           milesPerGal={this.state.userInfo.milesPerGal}
           curRemote={this.state.userInfo.curRemote}
 
-        />
+        /> */}
         {this.state.showOfferModal ?
           <OfferFormModal
             id={this.state.userInfo._id}
+            getUserData = {this.getUserData}
+            userInfo = {this.state.userInfo}
             newJob={this.state.userInfo.newJob}
             showOfferModal={this.state.showOfferModal}
             handleCloseOfferForm={this.handleCloseOfferForm}

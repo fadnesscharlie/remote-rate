@@ -8,6 +8,7 @@ class OfferFormModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo: this.props.userInfo,
       offer: {
         newSalary: 150000,
         newEmployer: 'Best Place of Work',
@@ -16,6 +17,7 @@ class OfferFormModal extends React.Component {
         workLat: '',
         workLon: '',
         newJob: this.props.newJob,
+        id: this.props.id,
       },
       email: '',
     }
@@ -59,13 +61,13 @@ class OfferFormModal extends React.Component {
         }
         console.log('you mother', data)
         console.log('ID :',this.props.id)
-        let sendMe = this.state.offer.newJob
+        let sendMe = this.state.userInfo.newJob
         sendMe.push(data);
-        console.log('SEND ME BUDDY', sendMe);
-        console.log('offer',this.state.offer)
-        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.props.id}`, this.state.offer);
+        console.log('SEND ME BUDDY', this.state.userInfo);
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.state.offer.id}`, this.state.userInfo);
 
       }).then(res => {
+        this.getUserData();
         console.log(`Success`, res);
       })
       // console.log('handle edit user state' ,this.state.offer);
@@ -73,7 +75,9 @@ class OfferFormModal extends React.Component {
       console.log(error);
     }
   }
-
+  getUserData = async (e) => {
+    await this.props.getUserData();
+  }
   handleNewEmployerInput = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
