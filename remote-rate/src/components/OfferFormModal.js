@@ -29,17 +29,6 @@ class OfferFormModal extends React.Component {
       let lat = newLocationData.data.results[0].geometry.location.lat
       let lon = newLocationData.data.results[0].geometry.location.lng
       return { lat, lon };
-      // console.log(`Lat ${lat} and lon ${lon}`);
-      // console.log('The lat from google api', newLocationData.data.results[0].geometry.location.lat);
-      // this.setState({
-      //   offer: {
-      //     workLat: newLocationData.data.results[0].geometry.location.lat,
-      //     workLon: newLocationData.data.results[0].geometry.location.lng,
-      //   },
-      //   banana: true,
-      //   email: this.state.email,
-      // }, () => console.log('state of offer' , this.state));
-      // console.log('user info before sending to server:', this.state)
     } catch (err) {
 
       console.log(err);

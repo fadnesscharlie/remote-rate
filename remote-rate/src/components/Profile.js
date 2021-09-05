@@ -17,17 +17,15 @@ class Profile extends React.Component {
     this.state = {
       userInfo: {
         email: '',
-        homeAddress: '',
         homeLat: '', // preset numbers
         homeLon: '',
-        workLat: '',
-        workLon: '',
+        // workLat: 47.6062,
+        // workLon: 122.3321,
         curEmployer: '',
-        curSalary: 0,
+        curSalary: '',
         curRemote: false,
-        commuteDist: 0,
-        milesPerGal: 0,
-        id: '',
+        commuteDist: '',
+        milesPerGal: '',
         newJob: [],
       },
       addressToSearch: '',
@@ -36,42 +34,27 @@ class Profile extends React.Component {
     }
   }
 
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     try {
-      await this.getWorkLocation()
-      console.log('Mount has ran')
-    } catch(error) {
-      console.log('component did mount error', error)
+      await this.getUserData();
+      console.log('State', this.state);
+    } catch (err) {
+      console.log(err);
     }
   }
-  getWorkLocation = async () => {
-    try {
-      let workData = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`)
 
-      console.log('work Data whole', workData.data);
-      console.log('work Data', workData.data[0]._id);
-
-      workData.data.map(element => {
-        if (element.email === this.props.email) {
-          console.log('workData email',element.email)
-          console.log('workData id',element._id)
-          
-          this.setState({
-            userInfo: {
-              id: element._id,
-              newJob: element.newJob,
-              workLat: element.newJob.workLat,
-              workLon: element.newJob.workLon,
-              
-            }
-          })
-        }
-      })
-      
-
-    } catch (error) {
-      console.log('something went wrong with getting work locations from backend', error)
-    }
+  getUserData = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
+    const allData = response.data;
+    allData.map(user => {
+      if (user.email === this.props.email) {
+        console.log(user);
+        this.setState({
+          userInfo: user,
+        });
+        return user;
+      }
+    })
   }
 
   getLocation = async (e) => {
@@ -81,7 +64,7 @@ class Profile extends React.Component {
       this.handleCloseForm();
       console.log('address to search:', this.state.addressToSearch);
       let locationData = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.addressToSearch}&key=${process.env.REACT_APP_GOOGLE_GEOCODE_API}`);
-      
+
       this.setState(prevState => ({
         userInfo: {
           ...prevState.userInfo,
@@ -94,31 +77,12 @@ class Profile extends React.Component {
       }));
       console.log('user info before sending to server:', this.state.userInfo);
       this.handleEditUser(this.state.userInfo);
-      // this.getWorkLocation();
+
     } catch (err) {
 
       console.log(err);
     }
   }
-
-
-  // handleUpdate = async (book) => {
-  //   console.log('updated books:', book);
-  //   await axios.put(`http://localhost:3001/books/${book._id}`, book);
-
-  //   const updateBooks = this.state.books.map(stateBook => {
-  //     if (stateBook._id === book._id) {
-  //       return book;
-  //     } else {
-  //       return stateBook;
-  //     }
-  //   });
-  //   this.setState({
-  //     books: updateBooks,
-  //   })
-  // }
-
-
   handleCityInput = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -143,6 +107,7 @@ class Profile extends React.Component {
     }));
   }
 
+
   handleSalaryInput = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -154,6 +119,7 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
+
 
   handleIsRemote = (e) => {
     e.preventDefault();
@@ -208,13 +174,13 @@ class Profile extends React.Component {
 
   handleShowOfferForm = () => {
     console.log('testing here');
-    this.setState ({
+    this.setState({
       showOfferModal: true,
     })
   }
 
   handleCloseOfferForm = () => {
-    this.setState ({
+    this.setState({
       showOfferModal: false,
     })
   }
@@ -239,11 +205,8 @@ class Profile extends React.Component {
     return (
       <>
         <Header />
-        {'email',this.props.email}
-        {'id',this.state.userInfo.id}
         <h1>Profile</h1>
         <Container>
-
           <Card className="shadow-lg p-3 mb-5 bg-white rounded">
             <Card.Header>
               Current Information for {this.props.name}
@@ -261,13 +224,18 @@ class Profile extends React.Component {
         </Container>
 
         <Button className="m-3" onClick={this.handleShowForm}>Edit User Info</Button>
-        <Button className="m-3" variant='success' onClick= {this.handleShowOfferForm}>New Offer</Button>
+        <Button className="m-3" variant='success' onClick={this.handleShowOfferForm}>New Offer</Button>
         <Container className="m-3">
           <CardColumns>
-            <Offer />
-            <Offer />
-            <Offer />
-            <Offer />
+            {this.state.userInfo.newJob.map(job => (
+              <Offer 
+              employer = {job.newEmployer}
+              salary = {job.newSalary}
+              remote = {job.newRemote}
+              location = {job.newLocation}/>
+             ))}
+
+            
 
           </CardColumns>
         </Container>
@@ -303,15 +271,8 @@ class Profile extends React.Component {
                   <option value='35'>35+</option>
                 </Form.Control>
               </Form.Group>
-              <Button 
-              variant="primary" 
-              type="submit" 
-              onClick={this.getLocation}
-              >Submit</Button>
-              <Button 
-              variant="outline-danger" className="m-1" 
-              onClick={this.handleCloseForm}
-              >
+              <Button variant="primary" type="submit" onClick={this.getLocation}>Submit</Button>
+              <Button variant="outline-danger" className="m-1" onClick={this.handleCloseForm}>
                 Close
               </Button>
             </Form>
@@ -325,15 +286,15 @@ class Profile extends React.Component {
           curRemote={this.state.userInfo.curRemote}
 
         />
-        {this.state.showOfferModal ? 
-        <OfferFormModal 
-        newJob={this.state.userInfo.newJob}
-        showOfferModal = {this.state.showOfferModal}
-        handleCloseOfferForm = {this.handleCloseOfferForm}
-        id={this.state.userInfo.id}
-        /> : '' }
+        {this.state.showOfferModal ?
+          <OfferFormModal
+            id={this.state.userInfo._id}
+            newJob={this.state.userInfo.newJob}
+            showOfferModal={this.state.showOfferModal}
+            handleCloseOfferForm={this.handleCloseOfferForm}
+          /> : ''}
 
-        
+
         <Footer />
       </>
 

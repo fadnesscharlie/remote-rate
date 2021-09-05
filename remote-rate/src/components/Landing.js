@@ -1,7 +1,7 @@
 import React from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-
+import Alert from 'react-bootstrap/Alert'
 import Header from './Header';
 import Footer from './Footer';
 import '../css/Landing.css';
@@ -19,7 +19,7 @@ class Landing extends React.Component {
       const { getIdTokenClaims } = this.props.auth0;
       let tokenClaims = await getIdTokenClaims();
       // console.log('I am here', tokenClaims)
-  
+
       const jwt = tokenClaims.__raw;
       // console.log('jwt', jwt);
       const config = {
@@ -38,8 +38,9 @@ class Landing extends React.Component {
     }
   }
   render() {
+    console.log(this.props.auth0);
 
-    const {isLoading} = this.props.auth0;
+    const { isLoading } = this.props.auth0;
 
     if (isLoading) {
       return <h2>Loading please wait...</h2>
@@ -47,9 +48,19 @@ class Landing extends React.Component {
       return (
         <>
           <Header />
-          <h1 className= 'h1'>  Remote Rate Landing Page</h1>
- 
-           {this.state.working ? this.state.working : 'This is working: false' }
+          <h1 className='h1'>  Remote Rate Landing Page</h1>
+
+          {this.props.auth0.isAuthenticated ?
+            <Alert variant="info" className="m-4 col-md-5">
+              <Alert.Heading>Alert is authenticated </Alert.Heading>
+              <p>
+                If this is your first time here, head over to the profile page and enter your information!
+              </p>
+              <hr />
+              <p className="mb-0">
+                You can then compare your offers on the Compare page.
+              </p>
+            </Alert> : ''}
 
           <section className="sample">
             User: Remote Rate
@@ -57,8 +68,8 @@ class Landing extends React.Component {
             Sample User and Savings
 
           </section>
-            
-            < Footer />
+
+          < Footer />
         </>
         // Header goes here
 
