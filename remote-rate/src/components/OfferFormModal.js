@@ -15,6 +15,7 @@ class OfferFormModal extends React.Component {
         newLocation: '',
         workLat: '',
         workLon: '',
+        newJob: this.props.newJob,
       },
       email: '',
     }
@@ -69,9 +70,14 @@ class OfferFormModal extends React.Component {
         }
         console.log('you mother', data)
         console.log('ID :',this.props.id)
-        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.props.id}`, data);
+        let sendMe = this.state.offer.newJob
+        sendMe.push(data);
+        console.log('SEND ME BUDDY', sendMe);
+        console.log('offer',this.state.offer)
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.props.id}`, this.state.offer);
+
       }).then(res => {
-        console.log(`Success`);
+        console.log(`Success`, res);
       })
       // console.log('handle edit user state' ,this.state.offer);
     } catch (error) {

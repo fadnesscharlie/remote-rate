@@ -327,6 +327,7 @@ class Profile extends React.Component {
         />
         {this.state.showOfferModal ? 
         <OfferFormModal 
+        newJob={this.state.userInfo.newJob}
         showOfferModal = {this.state.showOfferModal}
         handleCloseOfferForm = {this.handleCloseOfferForm}
         id={this.state.userInfo.id}
