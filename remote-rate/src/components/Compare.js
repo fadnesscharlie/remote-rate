@@ -1,10 +1,46 @@
 import React from 'react';
 import '../css/Compare.css';
+import axios from 'axios';
+import { Accordion, Card, Button, Container } from 'react-bootstrap';
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Footer from './Footer';
 
 
 
 class Compare extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: this.props.email,
+      renderData: false,
+    }
+  }
 
+  componentDidMount = async () => {
+    try {
+      await this.getUserData().then(console.log('State', this.state));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  getUserData = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
+    const allData = response.data;
+    console.log('All data from server:', allData);
+    allData.map(user => {
+      if (user.email === this.state.email) {
+        console.log(user);
+        this.setState({
+          userInfo: user,
+          renderData: true,
+        }, () => {
+          console.log('state has been set');
+        });
+        return user;
+      }
+    })
+  }
   // ################################################################################################################################################
 
   // Create a function that will return the cost of a years worth of driving 
@@ -55,64 +91,63 @@ class Compare extends React.Component {
   }
 
   render() {
- 
+    console.log('Compare state:', this.state);
     // Preset because no values when first passed in.
     let difference = this.compareOffer(parseInt(this.props.curSalary), 15)
     let annualGas = this.annualGasCost(parseInt(this.props.commuteDist), 3.50, parseInt(this.props.milesPerGal))
     let comparedRemotely = this.compareRemote(difference, annualGas)
 
     return (
+      //   <aside>
+      //   Information from Compare:<br />
+      //   `Salary: ${this.state.userInfo.curSalary}`
+      //   `Commute Distance: ${this.state.userInfo.commuteDist}`
+      //   `MPG: ${this.state.userInfo.milesPerGal}`
+      //   `Remote: {this.state.userInfo.curRemote ? 'true' : 'false'}`
+      //   {console.log('remote?: ', this.state.userInfo.curRemote)}
+      // </aside>
       <>
-        <aside>
-          Information from Compare:<br />
-          `Salary: ${this.props.curSalary}`
-          `Commute Distance: ${this.props.commuteDist}`
-          `MPG: ${this.props.milesPerGal}`
-          `Remote: {this.props.curRemote ? 'true' : 'false'}`
-          {console.log('remote?: ', this.props.curRemote)}
+          <Jumbotron className="p-3 mb-2 m-3 bg-secondary text-white" fluid>
+            <h1>Hello!</h1>
+            <p>
+              Select your Offers below to compare them!
+            </p>
+            <p>
+              <Button variant="primary">Learn more</Button>
+            </p>
+          </Jumbotron>
+          {this.state.renderData ?
+            <Container >
+              <Accordion className="m-4">
+                {this.state.userInfo.newJob.map((job, indx) => {
+                  return (
+                    <Card>
+                      <Accordion.Toggle as={Card.Header} eventKey={String(indx)}>
+                        {job.newEmployer}
+                      </Accordion.Toggle>
+                      <Accordion.Collapse eventKey={String(indx)}>
+                        <Card.Body>
+                          Net Gain from taking this position: {this.compareOffer(job.newSalary, this.state.userInfo.curSalary)}
+                          <br />
+                          New Salary: {job.newSalary}
+                          <br />
+                          New Job Location: {job.newLocation}
+                          <br />
+                          Remote? {job.remote ? 'Yes' : "No"}
+                          <br />
+                          Annual gas cost: {this.annualGasCost(job.newCommuteDist, 3.50, this.state.userInfo.milesPerGal)}
+                        </Card.Body>
 
-        </aside>
+                      </Accordion.Collapse>
 
-        {/* 
-        display 2 offers
-        Either one remote, vs in office, or two remote/in-office 
-        */}
-        <p className="offer1">
-          <p className="offer10">
-            Offer Driving into work<br />
+                    </Card>
+                  )
+                })}
+              </Accordion>
+            </Container>
 
-            Offer Price going into office: Offer<br />
-            Gas Price: Gas API<br />
-            Distance to work : Distance
-
-          </p>
-        </p>
-
-        <p className="offer2">
-          Offer Remote<br />
-          {this.props.curRemote ? 'Currently Remote' : 'Currently Not Remote'}<br />
-          Offer Price working remote: Offer
-        </p>
-
-        {/* Summary at the bottom */}
-        <p className="summary">
-          Summary<br />
-
-          {
-            this.props.curRemote ?
-              // If working Remote
-              <p>If you had to Drive: Cost to drive to work would be: {annualGas} annually <br />
-                The difference between your two offers is:  {difference} <br />
-                {comparedRemotely}<br />
-                StretchGoal-Driving time: Time spent/saved'</p> :
-
-              // If not working Remote
-              <p>Driving to work cost you {annualGas} annually <br />
-                The difference inbetween your offers is {difference} <br />
-                {comparedRemotely} <br />
-                StretchGoal-Driving time: Time spent/saved'</p>
-          }
-        </p>
+            : ''}
+        <Footer />
       </>
     )
   }

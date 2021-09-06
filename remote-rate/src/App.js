@@ -37,11 +37,14 @@ class App extends React.Component {
             <Route exact path="/profile">
               {isAuthenticated ?
                 <Profile email={user.email} name={user.name} /> :
-                <Profile />
+                <Profile email='youngqp3@gmail.com' />
               }
             </Route>
             <Route exact path="/compare">
-              <Compare />
+              {isAuthenticated?
+              <Compare email = {user.email}/>:
+              <Compare />}
+              
             </Route>
             <Route exact path="/aboutUs">
               <About />

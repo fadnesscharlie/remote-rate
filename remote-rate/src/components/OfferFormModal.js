@@ -13,6 +13,7 @@ class OfferFormModal extends React.Component {
         newSalary: 150000,
         newEmployer: 'Best Place of Work',
         newRemote: false,
+        newCommuteDist: '',
         newLocation: '',
         workLat: '',
         workLon: '',
@@ -56,6 +57,7 @@ class OfferFormModal extends React.Component {
           newEmployer: this.state.offer.newEmployer,
           newRemote: this.state.offer.newRemote,
           newLocation: this.state.offer.newLocation,
+          newCommuteDist: this.state.offer.newCommuteDist,
           workLat: lat,
           workLon: lon,
         }
@@ -124,6 +126,17 @@ class OfferFormModal extends React.Component {
     }));
   };
 
+  handleCommuteDist = (e) => {
+    e.preventDefault();
+    this.setState(prevState => ({
+      offer: {
+        ...prevState.offer,
+        newCommuteDist: e.target.value,
+      },
+      email: prevState.email,
+    }));
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -141,6 +154,11 @@ class OfferFormModal extends React.Component {
             <Form.Group>
               <Form.Check onChange={this.handleIsNewRemote} label="Remote Offer?" />
             </Form.Group>
+            <Form.Group>
+                <Form.Control onChange={this.handleCommuteDist} type="text" placeholder="Commute in Miles">
+                  
+                </Form.Control>
+              </Form.Group>
             <Form.Group>
               <Form.Control onChange={this.handleNewLocation} type="text" placeholder="New Offer Address" />
             </Form.Group>

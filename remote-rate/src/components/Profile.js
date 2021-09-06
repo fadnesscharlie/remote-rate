@@ -1,14 +1,10 @@
 import React from 'react';
-// import './Profile.css';
 import Header from './Header';
 import Offer from './Offer';
 import OfferFormModal from './OfferFormModal';
-import { Form, Button, Modal, Card, Container, CardColumns } from 'react-bootstrap';
-import Compare from './Compare';
-
+import { Form, Button, Modal, Card, Container, CardColumns, Jumbotron } from 'react-bootstrap';
 import axios from 'axios';
 import Footer from './Footer'
-
 import getDistance from 'geolib/es/getDistance';
 
 class Profile extends React.Component {
@@ -200,16 +196,21 @@ class Profile extends React.Component {
     return (
       <>
         <Header />
-        <h1>Profile</h1>
+        <Jumbotron className = "m-3 profileJumbotron">
+          <h1>Hello, {this.props.name} !</h1>
+        </Jumbotron>
         <Container>
           <Card className="shadow-lg p-3 mb-5 bg-white rounded">
             <Card.Header>
-              Current Information for {this.props.name}
+              Your Current Information
             </Card.Header>
             <Card.Body>
               Employer: {this.state.userInfo.curEmployer}
+              <br />
               Salary: {this.state.userInfo.curSalary}
+              <br />
               Remote?: {this.state.userInfo.curRemote ? 'yes' : 'no'}
+              <br />
               Commute: {this.state.userInfo.commuteDist}
             </Card.Body>
             <Card.Footer>
@@ -223,18 +224,19 @@ class Profile extends React.Component {
         <Container className="m-3">
           <CardColumns>
             {this.state.userInfo.newJob.map(job => (
-              <Offer 
-              employer = {job.newEmployer}
-              salary = {job.newSalary}
-              remote = {job.newRemote}
-              location = {job.newLocation}/>
-             ))}
+              <Offer
+                employer={job.newEmployer}
+                salary={job.newSalary}
+                remote={job.newRemote}
+                location={job.newLocation} />
+            ))}
 
-            
+
 
           </CardColumns>
-        </Container>
 
+        </Container>
+        <Footer />
         {this.state.showEditModal ? <Modal show={this.state.showEditModal}><Modal.Header>
           <h2>Create New Profile</h2>
         </Modal.Header>
@@ -266,6 +268,7 @@ class Profile extends React.Component {
                   <option value='35'>35+</option>
                 </Form.Control>
               </Form.Group>
+
               <Button variant="primary" type="submit" onClick={this.getLocation}>Submit</Button>
               <Button variant="outline-danger" className="m-1" onClick={this.handleCloseForm}>
                 Close
@@ -274,25 +277,18 @@ class Profile extends React.Component {
           </Modal.Body></Modal> : ''
         }
 
-        {/* <Compare
-          curSalary={this.state.userInfo.curSalary}
-          commuteDist={this.state.userInfo.commuteDist}
-          milesPerGal={this.state.userInfo.milesPerGal}
-          curRemote={this.state.userInfo.curRemote}
-
-        /> */}
         {this.state.showOfferModal ?
           <OfferFormModal
             id={this.state.userInfo._id}
-            getUserData = {this.getUserData}
-            userInfo = {this.state.userInfo}
+            getUserData={this.getUserData}
+            userInfo={this.state.userInfo}
             newJob={this.state.userInfo.newJob}
             showOfferModal={this.state.showOfferModal}
             handleCloseOfferForm={this.handleCloseOfferForm}
           /> : ''}
 
 
-        <Footer />
+
       </>
 
       // if user is logged in, show information
