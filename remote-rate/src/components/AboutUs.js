@@ -1,7 +1,5 @@
 import React from 'react';
 import '../css/AboutUs.css';
-import Header from './Header';
-import Footer from './Footer';
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck'
 
@@ -15,7 +13,6 @@ class AboutUs extends React.Component {
   render() {
     return (
       <>
-        <Header />
         <h1>Remote Rate Stars</h1>
 
         <CardDeck className="imageRow">
@@ -105,11 +102,6 @@ class AboutUs extends React.Component {
             </Card.Footer>
           </Card>
         </CardDeck>
-
-
-
-
-        <Footer />
       </>
     );
   }

@@ -1,8 +1,7 @@
 import React from 'react';
-import Header from './Header';
 import Offer from './Offer';
 import OfferFormModal from './OfferFormModal';
-import { Form, Button, Modal, Card, Container, CardColumns, Jumbotron } from 'react-bootstrap';
+import { Form, Button, Modal, Card, Container, CardColumns, Jumbotron, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import Footer from './Footer'
 import getDistance from 'geolib/es/getDistance';
@@ -12,8 +11,8 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       userInfo: {
-        // email: '',
-        email: process.env.EMAIL,
+        email: '',
+        // email: process.env.EMAIL,
         homeLat: '', // preset numbers
         homeLon: '',
         workLat: '',
@@ -24,7 +23,6 @@ class Profile extends React.Component {
         commuteDist: '',
         milesPerGal: '',
         newJob: [],
-
         _id: '',
       },
       addressToSearch: '',
@@ -51,12 +49,12 @@ class Profile extends React.Component {
       console.log('user Response Data', user)
       console.log('user email', this.props.email)
       if (user.email === this.props.email) {
-        console.log('user:',user);
+        console.log('user:', user);
         return this.setState({
           userInfo: user,
         });
-        // return user;
       }
+      return user;
     })
   }
 
@@ -64,9 +62,9 @@ class Profile extends React.Component {
     console.log('updateStateForUs', offer)
     let prevState = this.state
     prevState.userInfo.newJob.push(offer)
-    console.log('prevState ',prevState)
-    this.setState=(prevState)
-    
+    console.log('prevState ', prevState)
+    this.setState = (prevState)
+
   }
 
   componentDidUpdate = async () => {
@@ -250,6 +248,20 @@ class Profile extends React.Component {
     })
   }
 
+  // deleteOffer = async (id) => {
+  //   try {
+  //     await axios.delete(`${process.env.REACT_APP_BACKEND_SERVER}/profile/:${id}`)
+  //     let remainingOffers = this.state.userInfo.newJob.filter(offer => offer._id !== id);
+  //     this.setState({
+  //       userInfo: {
+  //         newJob: remainingOffers,
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
   // #################### POST ###########################
   handleEditUser = async (userData) => {
     try {
@@ -267,134 +279,140 @@ class Profile extends React.Component {
     // console.log('State function for lat and lon', this.state.userInfo.workLat, this.state.userInfo.workLon)
     return (
       <>
-        <Header />
-
-        <Jumbotron className = "m-3 profileJumbotron">
-          <h1>Hello, {this.props.name} !</h1>
-        </Jumbotron>
-
         <Container>
-          <Card className="shadow-lg p-3 mb-5 bg-white rounded">
-            <Card.Header>
-              Your Current Information
+          <Row>
+            <Col>
+              <Jumbotron className="m-3 profileJumbotron">
+                <h1>Hello, {this.props.name} !</h1>
+              </Jumbotron>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Card className="shadow-lg p-3 mb-5 bg-white rounded">
+                <Card.Header>
+                  Your Current Information
             </Card.Header>
-            <Card.Body>
-
-              Employer: {this.state.userInfo.curEmployer}
-              <br />
-              Salary: {this.state.userInfo.curSalary}
-              <br />
-              Remote?: {this.state.userInfo.curRemote ? 'yes' : 'no'}
-              <br />
-              Commute: {this.state.userInfo.commuteDist}
-
-            </Card.Body>
-            <Card.Footer>
-              {this.props.email}
-            </Card.Footer>
-          </Card>
+                <Card.Body>
+                  <Col>
+                    Employer: {this.state.userInfo.curEmployer}
+                    <br />
+                    Salary: ${this.state.userInfo.curSalary}
+                    <br />
+                    Remote: {this.state.userInfo.curRemote ? 'Yes' : 'No'}
+                    <br />
+                    Commute: {this.state.userInfo.commuteDist} miles
+              </Col>
+                  <Col>
+                    <Button className="m-3" onClick={this.handleShowForm}>Edit User Info</Button>
+                    <Button className="m-3" variant='success' onClick={this.handleShowOfferForm}>New Offer</Button>
+                  </Col>
+                </Card.Body>
+                <Card.Footer>
+                  {this.props.email}
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col>
+                <CardColumns>
+              {this.state.userInfo.newJob.map(job => (
+                    <Offer
+                    // deleteOffer={this.deleteOffer()}
+                      employer={job.newEmployer}
+                      salary={job.newSalary}
+                      remote={job.newRemote}
+                      location={job.newLocation} 
+                      // id={this.state._id}
+                      />
+              ))}
+                </CardColumns>
+            </Col>
+          </Row>
         </Container>
-
-        <Button className="m-3" onClick={this.handleShowForm}>Edit User Info</Button>
-        <Button className="m-3" variant='success' onClick={this.handleShowOfferForm}>New Offer</Button>
-        <Container className="m-3">
-          <CardColumns>
-
-            {this.state.userInfo.newJob.map(job => (
-              <Offer
-                employer={job.newEmployer}
-                salary={job.newSalary}
-                remote={job.newRemote}
-                location={job.newLocation} />
-            ))}
-
-
-
-          </CardColumns>
-
-        </Container>
-        <Footer />
-        {this.state.showEditModal ? 
-        <Modal show={this.state.showEditModal}><Modal.Header>
-          <h2>Create New Profile</h2>
-        </Modal.Header>
-          <Modal.Body>
-            <Form className='form' onSubmit={this.getLocation}>
-              <Form.Group>
-                <Form.Control
-                  onChange={this.handleCityInput}
-                  type="text"
-                  placeholder="Enter Home Address"
-                  required />
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  onChange={this.handleEmployerInput}
-                  type="text"
-                  placeholder="Current Employer" />
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  onChange={this.handleSalaryInput}
-                  type="text"
-                  placeholder="Current Salary"
-                  required />
-              </Form.Group>
-              <Form.Group>
-                <Form.Check
-                  onChange={this.handleIsRemote}
-                  label="Currently Working Remote?" />
-              </Form.Group>
-              {/* <Form.Group>
+        {
+          this.state.showEditModal ?
+            <Modal show={this.state.showEditModal}><Modal.Header>
+              <h2>Create New Profile</h2>
+            </Modal.Header>
+              <Modal.Body>
+                <Form className='form' onSubmit={this.getLocation}>
+                  <Form.Group>
+                    <Form.Control
+                      onChange={this.handleCityInput}
+                      type="text"
+                      placeholder="Enter Home Address"
+                      required />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Control
+                      onChange={this.handleEmployerInput}
+                      type="text"
+                      placeholder="Current Employer" />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Control
+                      onChange={this.handleSalaryInput}
+                      type="text"
+                      placeholder="Current Salary"
+                      required />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Check
+                      onChange={this.handleIsRemote}
+                      label="Currently Working Remote?" />
+                  </Form.Group>
+                  {/* <Form.Group>
                 <Form.Control 
                 onChange={this.handleCurCommute} 
                 type="text" 
                 placeholder="Current Commute in Miles" />
               </Form.Group> */}
-              <Form.Group>
-                <Form.Control
-                  onChange={this.handleMPG} as="select" >
-                  <option value='0' >Average Fuel Economy</option>
-                  <option value='15' >Less than 15</option>
-                  <option value='17.5'>15-20</option>
-                  <option value='22.5'>20-25</option>
-                  <option value='27.5'>25-30</option>
-                  <option value='32.5'>30-35</option>
-                  <option value='35'>35+</option>
+                  <Form.Group>
+                    <Form.Control
+                      onChange={this.handleMPG} as="select" >
+                      <option value='0' >Average Fuel Economy</option>
+                      <option value='15' >Less than 15</option>
+                      <option value='17.5'>15-20</option>
+                      <option value='22.5'>20-25</option>
+                      <option value='27.5'>25-30</option>
+                      <option value='32.5'>30-35</option>
+                      <option value='35'>35+</option>
                   required
                 </Form.Control>
-              </Form.Group>
+                  </Form.Group>
 
-              <Button 
-              variant="primary" 
-              type="submit" 
-              // onClick={this.getLocation}
-              >Submit</Button>
-              <Button 
-              variant="outline-danger" 
-              className="m-1" 
-              onClick={this.handleCloseForm}
-              >Close</Button>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                  // onClick={this.getLocation}
+                  >Submit</Button>
+                  <Button
+                    variant="outline-danger"
+                    className="m-1"
+                    onClick={this.handleCloseForm}
+                  >Close</Button>
 
-            </Form>
-          </Modal.Body></Modal> : ''
+                </Form>
+              </Modal.Body></Modal> : ''
         }
 
 
-        {this.state.showOfferModal ?
-          <OfferFormModal
-            id={this.state.userInfo._id}
-            getUserData={this.getUserData}
-            userInfo={this.state.userInfo}
-            newJob={this.state.userInfo.newJob}
-            showOfferModal={this.state.showOfferModal}
-            handleCloseOfferForm={this.handleCloseOfferForm}
-            // userInfo={this.state.userInfo}
-            getWorkLocation2={this.getWorkLocation2}
-            handleEditUser={this.handleEditUser}
-            updateStateForUs={this.updateStateForUs}
-          /> 
-           : ''} 
+        {
+          this.state.showOfferModal ?
+            <OfferFormModal
+              id={this.state.userInfo._id}
+              getUserData={this.getUserData}
+              userInfo={this.state.userInfo}
+              newJob={this.state.userInfo.newJob}
+              showOfferModal={this.state.showOfferModal}
+              handleCloseOfferForm={this.handleCloseOfferForm}
+              // userInfo={this.state.userInfo}
+              getWorkLocation2={this.getWorkLocation2}
+              handleEditUser={this.handleEditUser}
+              updateStateForUs={this.updateStateForUs}
+            />
+            : ''
+        }
 
 
 
