@@ -8,14 +8,17 @@ class OfferFormModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo: this.props.userInfo,
       offer: {
         newSalary: 150000,
         newEmployer: 'Best Place of Work',
         newRemote: false,
+        newCommuteDist: '',
         newLocation: '',
         workLat: '',
         workLon: '',
         newJob: this.props.newJob,
+        id: this.props.id,
       },
       email: '',
     }
@@ -57,27 +60,22 @@ class OfferFormModal extends React.Component {
           newEmployer: this.state.offer.newEmployer,
           newRemote: this.state.offer.newRemote,
           newLocation: this.state.offer.newLocation,
+          newCommuteDist: this.state.offer.newCommuteDist,
           workLat: lat,
           workLon: lon,
         }
-        // console.log('Data to be stored into State', data)
-        // console.log('ID :',this.props.id)
-        // let sendMe = this.state.offer.newJob
 
-        this.props.userInfo.newJob = data
+        console.log('you mother', data)
+        console.log('ID :',this.props.id)
+        let sendMe = this.state.userInfo.newJob
+        sendMe.push(data);
+        console.log('SEND ME BUDDY', this.state.userInfo);
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.state.offer.id}`, this.state.userInfo);
 
-        console.log('inside OfferFormModal, after passed object into newJob ',this.props.userInfo)
-
-        this.props.handleEditUser(this.props.userInfo)
-
-
-        // sendMe.push(data);
-        // console.log('Sendme: State After Data pushed in', sendMe);
-        // console.log('this.state.offer',this.state.offer)
-
-        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.props.id}`, this.props.userInfo);
+        // this.props.handleEditUser(this.props.userInfo)
 
       }).then(res => {
+        this.getUserData();
         console.log(`Success`, res);
       })
       // console.log('handle edit user state' ,this.state.offer);
@@ -85,7 +83,9 @@ class OfferFormModal extends React.Component {
       console.log(error);
     }
   }
-
+  getUserData = async (e) => {
+    await this.props.getUserData();
+  }
   handleNewEmployerInput = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -132,6 +132,17 @@ class OfferFormModal extends React.Component {
     }));
   };
 
+  handleCommuteDist = (e) => {
+    e.preventDefault();
+    this.setState(prevState => ({
+      offer: {
+        ...prevState.offer,
+        newCommuteDist: e.target.value,
+      },
+      email: prevState.email,
+    }));
+  }
+
   render() {
     // console.log(this.state);
     return (
@@ -162,12 +173,14 @@ class OfferFormModal extends React.Component {
               label="Remote Offer?" />
             </Form.Group>
             <Form.Group>
-              <Form.Control 
-              onChange={this.handleNewLocation} 
-              type="text" 
-              placeholder="New Offer Address" 
-              required
-              />
+
+                <Form.Control onChange={this.handleCommuteDist} type="text" placeholder="Commute in Miles">
+                  
+                </Form.Control>
+              </Form.Group>
+            <Form.Group>
+              <Form.Control onChange={this.handleNewLocation} type="text" placeholder="New Offer Address" />
+
             </Form.Group>
             <Button variant="primary" type="submit">Submit</Button>
             <Button variant="outline-danger" className="m-1" onClick={this.props.handleCloseOfferForm}>

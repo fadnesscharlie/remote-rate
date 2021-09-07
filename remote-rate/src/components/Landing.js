@@ -5,7 +5,11 @@ import Alert from 'react-bootstrap/Alert'
 import Header from './Header';
 import Footer from './Footer';
 import '../css/Landing.css';
+
+import { Button, Spinner, Container, Card } from 'react-bootstrap'
+
 import Jumbotron from 'react-bootstrap/Jumbotron'
+
 
 class Landing extends React.Component {
   constructor(props) {
@@ -44,10 +48,20 @@ class Landing extends React.Component {
     const { isLoading } = this.props.auth0;
 
     if (isLoading) {
-      return <h2>Loading please wait...</h2>
+      return (<Button variant="primary" disabled>
+        <Spinner
+          as="span"
+          animation="grow"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+        Loading...
+      </Button>
+      );
     } else {
       return (
-        <>
+        <Container className="vh-100">
           <Header />
           <h1 className='h1'>Welcome to Remote Rate</h1>
 
@@ -69,7 +83,7 @@ class Landing extends React.Component {
 
 
           {this.props.auth0.isAuthenticated ?
-            <Alert variant="info" className="m-4 col-md-5">
+            <Alert variant="info" className=" col-md-5 m-auto">
               <Alert.Heading>Alert is authenticated </Alert.Heading>
               <p>
                 If this is your first time here, head over to the profile page and enter your information!
@@ -80,6 +94,9 @@ class Landing extends React.Component {
               </p>
             </Alert> : ''}
 
+
+          <Card className="sample m-3">
+
           <section className="catchPhrase">
             <p className="catchWords">
 
@@ -87,15 +104,19 @@ class Landing extends React.Component {
             </p>
           </section>
 
-          <section className="sample">
-            User: Remote Rate
-            Home Address: 2901 3rd Ave #300, Seattle, WA 98121
-            Sample User and Savings
-
-          </section>
+          </Card>
+          <Card>
+            <Card.Header>User: Remote Rate</Card.Header>
+            <Card.Body className="m-3">
+              Home Address: 2901 3rd Ave #300, Seattle, WA 98121
+              </Card.Body>
+              <Card.Footer>
+                You can save: $500 Annually in gas costs
+              </Card.Footer>
+          </Card>
 
           < Footer />
-        </>
+        </Container>
         // Header goes here
 
         // Log in button

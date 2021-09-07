@@ -1,33 +1,36 @@
 import React from 'react';
-// import './Profile.css';
 import Header from './Header';
 import Offer from './Offer';
 import OfferFormModal from './OfferFormModal';
-import { Form, Button, Modal, Card, Container, CardColumns } from 'react-bootstrap';
-import Compare from './Compare';
-
+import { Form, Button, Modal, Card, Container, CardColumns, Jumbotron } from 'react-bootstrap';
 import axios from 'axios';
 import Footer from './Footer'
-
 import getDistance from 'geolib/es/getDistance';
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: [{
+
+        
+
+      userInfo: {
         email: '',
+        // email: 'youngqp3@gmail.com',
         homeLat: '', // preset numbers
         homeLon: '',
-        // workLat: 47.6062,
-        // workLon: 122.3321,
+        workLat: '11111',
+        workLon: '222222',
         curEmployer: '',
         curSalary: '',
         curRemote: false,
         commuteDist: '',
         milesPerGal: '',
         newJob: [],
-      }],
+
+        _id: '',
+      },
+
       addressToSearch: '',
       showEditModal: false,
       showOfferModal: false,
@@ -46,6 +49,7 @@ class Profile extends React.Component {
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
     const allData = response.data;
+    console.log('All data from server:', allData);
     allData.map(user => {
       if (user.email === this.props.email) {
         console.log(user);
@@ -153,8 +157,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   }
-
-
   handleSalaryInput = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -166,8 +168,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
-
   handleIsRemote = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -179,7 +179,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
   handleCurCommute = (e) => {
     e.preventDefault();
 
@@ -193,7 +192,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
   handleMPG = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
@@ -205,7 +203,6 @@ class Profile extends React.Component {
       showEditModal: prevState.showEditModal,
     }));
   };
-
   handleShowForm = () => {
     this.setState({
       showEditModal: true,
@@ -248,25 +245,26 @@ class Profile extends React.Component {
     return (
       <>
         <Header />
-        <h1>Profile</h1>
-        <h2>
-          email {this.props.email}, 
-          id {this.state.userInfo.id}
-        </h2>
+
+        <Jumbotron className = "m-3 profileJumbotron">
+          <h1>Hello, {this.props.name} !</h1>
+        </Jumbotron>
+
         <Container>
           <Card className="shadow-lg p-3 mb-5 bg-white rounded">
             <Card.Header>
-              Current Information for {this.props.name}
+              Your Current Information
             </Card.Header>
             <Card.Body>
-              Employer: {this.state.userInfo.curEmployer}<br />
-              Salary: {this.state.userInfo.curSalary}<br />
-              Remote?: {this.state.userInfo.curRemote ? 'yes' : 'no'}<br />
-              Commute: {this.state.userInfo.commuteDist}<br />
-              Home Lat: {this.state.userInfo.homeLat} <br />
-              Home Lon: {this.state.userInfo.homeLon} <br />
-              Work Lat: {this.state.userInfo.workLat} <br />
-              Work Lon: {this.state.userInfo.workLon}
+
+              Employer: {this.state.userInfo.curEmployer}
+              <br />
+              Salary: {this.state.userInfo.curSalary}
+              <br />
+              Remote?: {this.state.userInfo.curRemote ? 'yes' : 'no'}
+              <br />
+              Commute: {this.state.userInfo.commuteDist}
+
             </Card.Body>
             <Card.Footer>
               {this.props.email}
@@ -278,19 +276,21 @@ class Profile extends React.Component {
         <Button className="m-3" variant='success' onClick={this.handleShowOfferForm}>New Offer</Button>
         <Container className="m-3">
           <CardColumns>
-            {/* {this.state.userInfo.newJob.map(job => (
-              <Offer 
-              employer = {job.newEmployer}
-              salary = {job.newSalary}
-              remote = {job.newRemote}
-              location = {job.newLocation}/>
-             ))} */}
 
-            
+            {this.state.userInfo.newJob.map(job => (
+              <Offer
+                employer={job.newEmployer}
+                salary={job.newSalary}
+                remote={job.newRemote}
+                location={job.newLocation} />
+            ))}
+
+
 
           </CardColumns>
-        </Container>
 
+        </Container>
+        <Footer />
         {this.state.showEditModal ? <Modal show={this.state.showEditModal}><Modal.Header>
           <h2>Create New Profile</h2>
         </Modal.Header>
@@ -340,6 +340,7 @@ class Profile extends React.Component {
                   required
                 </Form.Control>
               </Form.Group>
+
               <Button 
               variant="primary" 
               type="submit" 
@@ -350,17 +351,17 @@ class Profile extends React.Component {
               className="m-1" 
               onClick={this.handleCloseForm}
               >Close</Button>
+
             </Form>
           </Modal.Body></Modal> : ''
         }
 
-        <Compare
-          userInfo={this.state.userInfo}
 
-        />
         {this.state.showOfferModal ?
           <OfferFormModal
             id={this.state.userInfo._id}
+            getUserData={this.getUserData}
+            userInfo={this.state.userInfo}
             newJob={this.state.userInfo.newJob}
             showOfferModal={this.state.showOfferModal}
             handleCloseOfferForm={this.handleCloseOfferForm}
@@ -370,7 +371,7 @@ class Profile extends React.Component {
           /> : ''}
 
 
-        <Footer />
+
       </>
 
       // if user is logged in, show information
