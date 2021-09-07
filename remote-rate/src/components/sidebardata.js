@@ -23,10 +23,10 @@ export const sidebardata = [
     icon: <RemixIcons.RiTeamLine/>,
     cName:'nav-text'
   },
-  // {
-  //   title:'Compare',
-  //   path: '/compare',
-  //   icon: <RemixIcons.RiGasStationFill/>,
-  //   cName:'nav-text'
-  // },
+  {
+    title:'Compare',
+    path: '/compare',
+    icon: <RemixIcons.RiGasStationFill/>,
+    cName:'nav-text'
+  },
 ]

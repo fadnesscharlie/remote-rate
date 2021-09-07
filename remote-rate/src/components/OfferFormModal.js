@@ -53,7 +53,7 @@ class OfferFormModal extends React.Component {
       Promise.resolve(dataObject).then(res => {
         lat = res.lat;
         lon = res.lon;
-
+        
         // console.log('Lat and Lon', lat, lon);
         let data = {
           newSalary: this.state.offer.newSalary,
@@ -64,14 +64,14 @@ class OfferFormModal extends React.Component {
           workLat: lat,
           workLon: lon,
         }
-
-        console.log('you mother', data)
-        console.log('ID :',this.props.id)
+        // console.log('you mother', data)
+        // console.log('ID :',this.props.id)
         let sendMe = this.state.userInfo.newJob
         sendMe.push(data);
         console.log('SEND ME BUDDY', this.state.userInfo);
-        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.state.offer.id}`, this.state.userInfo);
-
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.state.offer.id}`, this.state.userInfo)
+        
+        // this.updateStateForUs(data)
         // this.props.handleEditUser(this.props.userInfo)
 
       }).then(res => {
@@ -83,9 +83,17 @@ class OfferFormModal extends React.Component {
       console.log(error);
     }
   }
+
+  updateStateForUs =(data) => {
+    this.props.updateStateForUs(data)
+  }
+
+
   getUserData = async (e) => {
     await this.props.getUserData();
   }
+
+
   handleNewEmployerInput = (e) => {
     e.preventDefault();
     this.setState(prevState => ({
