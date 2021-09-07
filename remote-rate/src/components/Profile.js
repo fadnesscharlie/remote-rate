@@ -11,8 +11,12 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
+        
+
       userInfo: {
-        email: 'youngqp3@gmail.com',
+        email: '',
+        // email: 'youngqp3@gmail.com',
         homeLat: '', // preset numbers
         homeLon: '',
         workLat: '11111',
@@ -23,8 +27,10 @@ class Profile extends React.Component {
         commuteDist: '',
         milesPerGal: '',
         newJob: [],
+
         _id: '',
       },
+
       addressToSearch: '',
       showEditModal: false,
       showOfferModal: false,
@@ -55,12 +61,54 @@ class Profile extends React.Component {
     })
   }
 
+  // postNewOffer = async (offer) => {
+  //   try {
+  //     let response = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/post-offers`, offer);
+  //     const newOffer = response.data;
+
+  //     this.setState({
+  //       userInfo: newJob = {
+  //         workLat: offer.lat,
+  //         workLon: offer.Lon
+  //       }
+  //     })
+
+
+  //   } catch (error) {
+  //     console.log('error in post', error)
+  //   }
+  // }
+
+  getWorkLocation2 = (lat, lon) => {
+
+    // ############################################ 
+    // Changed set state!!!!
+
+
+    let distanceToWork = getDistance(
+      { latitude: this.state.userInfo.homeLat, longitude: this.state.userInfo.homeLon },
+      { latitude: lat, longitude: lon }
+    )
+    let distanceInMiles = distanceToWork / 1609
+
+    this.setState(prevState => ({
+      userInfo: {
+        ...prevState.userInfo,
+        commuteDist: distanceInMiles,
+        workLat: lat,
+        workLon: lon,
+      },
+    }));
+  }
+
+
+
   getLocation = async (e) => {
     //  function will use city stored in state to search api with axios
     e.preventDefault();
     try {
       this.handleCloseForm();
-      console.log('address to search:', this.state.addressToSearch);
+      // console.log('address to search:', this.state.addressToSearch);
       let locationData = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.addressToSearch}&key=${process.env.REACT_APP_GOOGLE_GEOCODE_API}`);
 
       this.setState(prevState => ({
@@ -74,7 +122,12 @@ class Profile extends React.Component {
         showEditModal: prevState.showEditModal,
       }));
       console.log('user info before sending to server:', this.state.userInfo);
+
       this.handleEditUser(this.state.userInfo);
+
+      console.log('user info after sending to server:', this.state.userInfo);
+
+      // this.getWorkLocation();
 
     } catch (err) {
 
@@ -90,7 +143,7 @@ class Profile extends React.Component {
       addressToSearch: e.target.value,
       showEditModal: prevState.showEditModal,
     }));
-    console.log(this.state);
+    // console.log(this.state);
   };
 
   handleEmployerInput = (e) => {
@@ -129,18 +182,11 @@ class Profile extends React.Component {
   handleCurCommute = (e) => {
     e.preventDefault();
 
-    // ############################################ 
-    // Changed set state!!!!
 
-
-    let distanceToWork = getDistance(
-      { latitude: this.state.userInfo.homeLat, longitude: this.state.userInfo.homeLon },
-      { latitude: this.state.userInfo.workLat, longitude: this.state.userInfo.workLon }
-    )
     this.setState(prevState => ({
       userInfo: {
         ...prevState.userInfo,
-        commuteDist: distanceToWork,
+        commuteDist: e.target.value,
       },
       addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
@@ -164,7 +210,7 @@ class Profile extends React.Component {
   }
 
   handleShowOfferForm = () => {
-    console.log('testing here');
+    // console.log('testing here');
     this.setState({
       showOfferModal: true,
     })
@@ -181,30 +227,36 @@ class Profile extends React.Component {
       showEditModal: false,
     })
   }
+
+  // #################### POST ###########################
   handleEditUser = async (userData) => {
     try {
-      console.log('handle edit user state:', this.state.userInfo);
-      let response = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/profile`, userData);
-      console.log(response);
+      console.log('Post to Update DB:', this.state.userInfo);
+      // let response = 
+      await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/profile`, userData);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
   }
 
   render() {
-
+    // console.log('State function for lat and lon', this.state.userInfo.workLat, this.state.userInfo.workLon)
     return (
       <>
         <Header />
+
         <Jumbotron className = "m-3 profileJumbotron">
           <h1>Hello, {this.props.name} !</h1>
         </Jumbotron>
+
         <Container>
           <Card className="shadow-lg p-3 mb-5 bg-white rounded">
             <Card.Header>
               Your Current Information
             </Card.Header>
             <Card.Body>
+
               Employer: {this.state.userInfo.curEmployer}
               <br />
               Salary: {this.state.userInfo.curSalary}
@@ -212,6 +264,7 @@ class Profile extends React.Component {
               Remote?: {this.state.userInfo.curRemote ? 'yes' : 'no'}
               <br />
               Commute: {this.state.userInfo.commuteDist}
+
             </Card.Body>
             <Card.Footer>
               {this.props.email}
@@ -223,6 +276,7 @@ class Profile extends React.Component {
         <Button className="m-3" variant='success' onClick={this.handleShowOfferForm}>New Offer</Button>
         <Container className="m-3">
           <CardColumns>
+
             {this.state.userInfo.newJob.map(job => (
               <Offer
                 employer={job.newEmployer}
@@ -243,22 +297,39 @@ class Profile extends React.Component {
           <Modal.Body>
             <Form className='form'>
               <Form.Group>
-                <Form.Control onChange={this.handleCityInput} type="text" placeholder="Enter Home Address" />
+                <Form.Control
+                  onChange={this.handleCityInput}
+                  type="text"
+                  placeholder="Enter Home Address"
+                  required />
               </Form.Group>
               <Form.Group>
-                <Form.Control onChange={this.handleEmployerInput} type="text" placeholder="Current Employer" />
+                <Form.Control
+                  onChange={this.handleEmployerInput}
+                  type="text"
+                  placeholder="Current Employer" />
               </Form.Group>
               <Form.Group>
-                <Form.Control onChange={this.handleSalaryInput} type="text" placeholder="Current Salary" />
+                <Form.Control
+                  onChange={this.handleSalaryInput}
+                  type="text"
+                  placeholder="Current Salary"
+                  required />
               </Form.Group>
               <Form.Group>
-                <Form.Check onChange={this.handleIsRemote} label="Currently Working Remote?" />
+                <Form.Check
+                  onChange={this.handleIsRemote}
+                  label="Currently Working Remote?" />
               </Form.Group>
+              {/* <Form.Group>
+                <Form.Control 
+                onChange={this.handleCurCommute} 
+                type="text" 
+                placeholder="Current Commute in Miles" />
+              </Form.Group> */}
               <Form.Group>
-                <Form.Control onChange={this.handleCurCommute} type="text" placeholder="Current Commute in Miles" />
-              </Form.Group>
-              <Form.Group>
-                <Form.Control onChange={this.handleMPG} as="select" >
+                <Form.Control
+                  onChange={this.handleMPG} as="select" >
                   <option value='0' >Average Fuel Economy</option>
                   <option value='15' >Less than 15</option>
                   <option value='17.5'>15-20</option>
@@ -266,16 +337,25 @@ class Profile extends React.Component {
                   <option value='27.5'>25-30</option>
                   <option value='32.5'>30-35</option>
                   <option value='35'>35+</option>
+                  required
                 </Form.Control>
               </Form.Group>
 
-              <Button variant="primary" type="submit" onClick={this.getLocation}>Submit</Button>
-              <Button variant="outline-danger" className="m-1" onClick={this.handleCloseForm}>
-                Close
-              </Button>
+              <Button 
+              variant="primary" 
+              type="submit" 
+              onClick={this.getLocation}
+              >Submit</Button>
+              <Button 
+              variant="outline-danger" 
+              className="m-1" 
+              onClick={this.handleCloseForm}
+              >Close</Button>
+
             </Form>
           </Modal.Body></Modal> : ''
         }
+
 
         {this.state.showOfferModal ?
           <OfferFormModal
@@ -285,6 +365,9 @@ class Profile extends React.Component {
             newJob={this.state.userInfo.newJob}
             showOfferModal={this.state.showOfferModal}
             handleCloseOfferForm={this.handleCloseOfferForm}
+            userInfo={this.state.userInfo}
+            getWorkLocation2={this.getWorkLocation2}
+            handleEditUser={this.handleEditUser}
           /> : ''}
 
 

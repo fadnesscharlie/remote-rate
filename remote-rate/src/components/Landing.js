@@ -5,7 +5,11 @@ import Alert from 'react-bootstrap/Alert'
 import Header from './Header';
 import Footer from './Footer';
 import '../css/Landing.css';
+
 import { Button, Spinner, Container, Card } from 'react-bootstrap'
+
+import Jumbotron from 'react-bootstrap/Jumbotron'
+
 
 class Landing extends React.Component {
   constructor(props) {
@@ -59,7 +63,24 @@ class Landing extends React.Component {
       return (
         <Container className="vh-100">
           <Header />
-          <h1 className='h1'>  Remote Rate Landing Page</h1>
+          <h1 className='h1'>Welcome to Remote Rate</h1>
+
+          <Jumbotron fluid>
+            <section className="info">
+              We welcome you to explore the options of working fully remote! <br />
+              Here you will be able to compare your current work with your new work offer!<br />
+
+            </section>
+            <aside className="infoBox">
+              Things to look forward to:<br /> <br />
+
+              <p>You will be able to see the total miles you drive a year!</p>
+              <p>How much would you spend a year on gas</p>
+              <p>The difference between your offers</p>
+              <p>And the distance between your home and work</p>
+            </aside>
+          </Jumbotron>
+
 
           {this.props.auth0.isAuthenticated ?
             <Alert variant="info" className=" col-md-5 m-auto">
@@ -73,8 +94,15 @@ class Landing extends React.Component {
               </p>
             </Alert> : ''}
 
+
           <Card className="sample m-3">
 
+          <section className="catchPhrase">
+            <p className="catchWords">
+
+              Get the money you deserve! Say it with me! It's my Money and I want it NOW!
+            </p>
+          </section>
 
           </Card>
           <Card>

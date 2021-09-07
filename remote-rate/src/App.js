@@ -22,31 +22,57 @@ class App extends React.Component {
     return (
       <body className="body">
         <Router>
-        <Navbar/>
+          <Navbar />
           <Switch>
             <Route exact path="/">
               {
                 isAuthenticated ?
-                  <> <Landing /> <LogoutButton /> <h3>{user.name}</h3> </> :
+                  <> <Landing /> <LogoutButton /> <h3>Welcome {user.given_name}</h3> </> :
                   <> <Landing /> <Login /> </>
               }
             </Route>
             <Route exact path="/landing">
+              {
+                isAuthenticated ?
+                <> 
+                  <LogoutButton /> 
+                  <h3>Welcome {user.given_name}</h3> </> :
+                  <> <Landing /> <Login /> 
+                  </>
+              }
               <Landing />
             </Route>
             <Route exact path="/profile">
+              {
+                isAuthenticated ?
+                  <> 
+                  <LogoutButton /> 
+                  <h3>Welcome {user.given_name}</h3> </> :
+                  <> <Landing /> <Login /> 
+                  </>
+              }
               {isAuthenticated ?
                 <Profile email={user.email} name={user.name} /> :
                 <Profile email='youngqp3@gmail.com' />
               }
             </Route>
+
             <Route exact path="/compare">
               {isAuthenticated?
               <Compare email = {user.email}/>:
               <Compare />}
               
             </Route>
+
             <Route exact path="/aboutUs">
+            {
+                isAuthenticated ?
+                  <> 
+                  <LogoutButton /> 
+                  <h3>Welcome {user.given_name}</h3> </> :
+                  <> <Landing /> <Login /> 
+                  </>
+              }
               <About />
             </Route>
           </Switch>

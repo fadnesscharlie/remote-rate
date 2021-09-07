@@ -24,6 +24,7 @@ class Compare extends React.Component {
     }
   }
 
+
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
     const allData = response.data;
@@ -41,13 +42,14 @@ class Compare extends React.Component {
       }
     })
   }
+
   // ################################################################################################################################################
 
   // Create a function that will return the cost of a years worth of driving 
   annualGasCost = (distance, gasAPI, carMPG) => {
-    // distance = 15
-    // gasAPI = 3.50;
-    // carMPG = 25;
+    distance = 15
+    gasAPI = 3.50;
+    carMPG = 25;
 
     // 25 / 15
     // divide MPG with miles to work
@@ -69,9 +71,11 @@ class Compare extends React.Component {
 
   // Create a function that will compare the two salaries
   compareOffer = (offer1, offer2) => {
+    offer1 = 1000
+    offer2 = 2000
     // Take in both offer prices, return the difference
     let difference = offer1 - offer2;
-    return Math.abs(difference);
+    return difference;
   }
 
   // Comparing a remote vs non remote job
@@ -93,9 +97,20 @@ class Compare extends React.Component {
   render() {
     console.log('Compare state:', this.state);
     // Preset because no values when first passed in.
-    let difference = this.compareOffer(parseInt(this.props.curSalary), 15)
-    let annualGas = this.annualGasCost(parseInt(this.props.commuteDist), 3.50, parseInt(this.props.milesPerGal))
+
+    // compare offer takes in offer 1 and offer 2
+    let difference = this.compareOffer(parseInt(this.props.userInfo.curSalary), 
+    // parseInt(this.props.userInfo.newJob.newSalary)
+    99999999
+      )
+
+    // annualGasCost takes in commute, gas, MPG
+    let annualGas = this.annualGasCost(parseInt(this.props.userInfo.commuteDist), 3.50, parseInt(this.props.userInfo.milesPerGal))
+
+    // CompareRemote takes in results from above functions
     let comparedRemotely = this.compareRemote(difference, annualGas)
+
+
 
     return (
       //   <aside>
@@ -107,6 +122,7 @@ class Compare extends React.Component {
       //   {console.log('remote?: ', this.state.userInfo.curRemote)}
       // </aside>
       <>
+
           <Jumbotron className="p-3 mb-2 m-3 bg-secondary text-white" fluid>
             <h1>Hello!</h1>
             <p>
@@ -148,6 +164,7 @@ class Compare extends React.Component {
 
             : ''}
         <Footer />
+
       </>
     )
   }

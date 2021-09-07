@@ -12,3 +12,37 @@ body {
 .h1 {
   margin-left: 200px;
 }
+
+.catchPhrase {
+  width: 40%;
+  border: black 7px solid;
+  padding: 10px;
+  font-size: 2em;
+  background-color: white;
+  margin: 30px;
+  margin-bottom: 10px;
+  height: 220px;
+}
+
+.catchWords {
+  padding: 20px;
+  background-color: cornflowerblue;
+
+}
+
+.info {
+  border: red 2px solid;
+  font-size: 1.6em;
+  text-align: center;
+  /* text-emphasis: bold; */
+  margin-bottom: 20px;
+}
+
+.infoBox {
+  font-size: 1.2em;
+
+  border: red 2px solid;
+  text-align: left;
+  margin: auto;
+  width:max-content;
+}
