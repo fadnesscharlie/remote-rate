@@ -36,7 +36,7 @@ class AboutUs extends React.Component {
               <Card.Title>Zach Winterton</Card.Title>
             <div className="overlay">
               <Card.Text className="text">
-                Vetrean, software developer, stock trader, drug dealer. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time
+                Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.
               </Card.Text>
             </div>
             </Card.Body>
