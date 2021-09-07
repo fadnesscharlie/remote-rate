@@ -21,7 +21,7 @@ class App extends React.Component {
     return (
       <Container>
         <Router>
-          <Navbar />
+          <Navbar isAuthenticated={isAuthenticated} />
           <Header />
           <Switch>
             <Route exact path="/">
