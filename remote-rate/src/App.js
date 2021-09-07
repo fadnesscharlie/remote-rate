@@ -27,53 +27,88 @@ class App extends React.Component {
             <Route exact path="/">
               {
                 isAuthenticated ?
-                  <> <Landing /> <LogoutButton /> <h3>Welcome {user.given_name}</h3> </> :
-                  <> <Landing /> <Login /> </>
+                  <>
+                    <LogoutButton />
+                    <h3>Welcome {user.given_name}</h3>
+                    <Landing />
+                  </> :
+                  <>
+                    <Login />
+                    <h2>Hello, please log in.</h2>
+                    <Landing />
+                  </>
               }
             </Route>
             <Route exact path="/landing">
               {
                 isAuthenticated ?
-                <> 
-                  <LogoutButton /> 
-                  <h3>Welcome {user.given_name}</h3> </> :
-                  <> <Landing /> <Login /> 
+                  <>
+                    <LogoutButton />
+                    <h3>Welcome {user.given_name}</h3>
+                    <Landing />
+                  </> :
+                  <>
+                    <Login />
+                    <h2>Hello, please log in to access your offers and comparisons</h2>
+                    <Landing />
                   </>
               }
-              <Landing />
             </Route>
             <Route exact path="/profile">
               {
                 isAuthenticated ?
-                  <> 
-                  <LogoutButton /> 
-                  <h3>Welcome {user.given_name}</h3> </> :
-                  <> <Landing /> <Login /> 
+                  <>
+                    <LogoutButton />
+
+                    {/* <h3>Welcome {user.given_name}</h3>  */}
+                    <Profile email={user.email} name={user.name} />
+                    </> :
+                  <>
+                    <Login />
+                    <h2>Hello, please log in to access the Profile Page</h2>
+                    <Landing />
                   </>
               }
-              {isAuthenticated ?
+
+              {/* {isAuthenticated ?
                 <Profile email={user.email} name={user.name} /> :
                 <Profile email='youngqp3@gmail.com' />
-              }
+              } */}
             </Route>
 
             <Route exact path="/compare">
-              {isAuthenticated?
-              <Compare email = {user.email}/>:
-              <Compare />}
-              
+
+
+              {
+                isAuthenticated ?
+                  <>
+                    <LogoutButton />
+                    <h3>Welcome {user.given_name}</h3> 
+                    <Compare email={user.email} />
+                  </> :
+                  <>
+                    <Login />
+                    <h2>Hello, please log in to access the Comparison Page</h2>
+                    <Landing />
+                  </>
+              }
+
             </Route>
 
             <Route exact path="/aboutUs">
-            {
+              {
                 isAuthenticated ?
-                  <> 
-                  <LogoutButton /> 
-                  <h3>Welcome {user.given_name}</h3> </> :
-                  <> <Landing /> <Login /> 
+                  <>
+                    <LogoutButton />
+                    <h3>Welcome {user.given_name}</h3>
+                    <About />
+                  </> :
+                  <>
+                    <Login />
+                    <About />
                   </>
               }
-              <About />
+
             </Route>
           </Switch>
         </Router>

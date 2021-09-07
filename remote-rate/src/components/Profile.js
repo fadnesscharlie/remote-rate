@@ -11,16 +11,13 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
-        
-
       userInfo: {
-        email: '',
-        // email: 'youngqp3@gmail.com',
+        // email: '',
+        email: process.env.EMAIL,
         homeLat: '', // preset numbers
         homeLon: '',
-        workLat: '11111',
-        workLon: '222222',
+        workLat: '',
+        workLon: '',
         curEmployer: '',
         curSalary: '',
         curRemote: false,
@@ -30,7 +27,6 @@ class Profile extends React.Component {
 
         _id: '',
       },
-
       addressToSearch: '',
       showEditModal: false,
       showOfferModal: false,
@@ -49,16 +45,42 @@ class Profile extends React.Component {
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
     const allData = response.data;
-    console.log('All data from server:', allData);
+    // console.log('All data from server:', allData);
     allData.map(user => {
+      // Database user vs user logged in
+      console.log('user Response Data', user)
+      console.log('user email', this.props.email)
       if (user.email === this.props.email) {
-        console.log(user);
-        this.setState({
+        console.log('user:',user);
+        return this.setState({
           userInfo: user,
         });
-        return user;
+        // return user;
       }
     })
+  }
+
+  updateStateForUs = (offer) => {
+    console.log('updateStateForUs', offer)
+    let prevState = this.state
+    prevState.userInfo.newJob.push(offer)
+    console.log('prevState ',prevState)
+    this.setState=(prevState)
+    
+  }
+
+  componentDidUpdate = async () => {
+    // if statement to run and load state when something happens
+
+    // if (this.state.userInfo.newJob.length !== this.state.userInfo.newJob) {
+    //   await this.getUserData();
+
+    //   console.log('if statement ran component updated')
+    // }
+    // console.log('component updated after')
+
+    // call getUserData
+
   }
 
   // postNewOffer = async (offer) => {
@@ -121,11 +143,11 @@ class Profile extends React.Component {
         addressToSearch: prevState.addressToSearch,
         showEditModal: prevState.showEditModal,
       }));
-      console.log('user info before sending to server:', this.state.userInfo);
+      // console.log('user info before sending to server:', this.state.userInfo);
 
       this.handleEditUser(this.state.userInfo);
 
-      console.log('user info after sending to server:', this.state.userInfo);
+      // console.log('user info after sending to server:', this.state.userInfo);
 
       // this.getWorkLocation();
 
@@ -231,9 +253,10 @@ class Profile extends React.Component {
   // #################### POST ###########################
   handleEditUser = async (userData) => {
     try {
-      console.log('Post to Update DB:', this.state.userInfo);
+      // console.log('Post to Update DB:', this.state.userInfo);
       // let response = 
-      await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/profile`, userData);
+      await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/profile`, userData)
+      this.getUserData()
       // console.log(response);
     } catch (error) {
       console.log(error);
@@ -291,11 +314,12 @@ class Profile extends React.Component {
 
         </Container>
         <Footer />
-        {this.state.showEditModal ? <Modal show={this.state.showEditModal}><Modal.Header>
+        {this.state.showEditModal ? 
+        <Modal show={this.state.showEditModal}><Modal.Header>
           <h2>Create New Profile</h2>
         </Modal.Header>
           <Modal.Body>
-            <Form className='form'>
+            <Form className='form' onSubmit={this.getLocation}>
               <Form.Group>
                 <Form.Control
                   onChange={this.handleCityInput}
@@ -344,7 +368,7 @@ class Profile extends React.Component {
               <Button 
               variant="primary" 
               type="submit" 
-              onClick={this.getLocation}
+              // onClick={this.getLocation}
               >Submit</Button>
               <Button 
               variant="outline-danger" 
@@ -365,10 +389,12 @@ class Profile extends React.Component {
             newJob={this.state.userInfo.newJob}
             showOfferModal={this.state.showOfferModal}
             handleCloseOfferForm={this.handleCloseOfferForm}
-            userInfo={this.state.userInfo}
+            // userInfo={this.state.userInfo}
             getWorkLocation2={this.getWorkLocation2}
             handleEditUser={this.handleEditUser}
-          /> : ''}
+            updateStateForUs={this.updateStateForUs}
+          /> 
+           : ''} 
 
 
 

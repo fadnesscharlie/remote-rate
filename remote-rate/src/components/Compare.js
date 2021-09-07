@@ -28,7 +28,7 @@ class Compare extends React.Component {
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
     const allData = response.data;
-    console.log('All data from server:', allData);
+    // console.log('All data from server:', allData);
     allData.map(user => {
       if (user.email === this.state.email) {
         console.log(user);
@@ -95,7 +95,7 @@ class Compare extends React.Component {
   }
 
   render() {
-    console.log('Compare state:', this.state);
+    // console.log('Compare state:', this.state);
     // Preset because no values when first passed in.
 
     // compare offer takes in offer 1 and offer 2
