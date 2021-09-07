@@ -8,13 +8,14 @@ class Offer extends React.Component {
     return (
       <Card>
         <Card.Header>
-          Job Offer title here
+          {this.props.employer}
         </Card.Header>
         <Card.Body>
-          Offer details here
+          Salary: {this.props.salary}
+          Remote: {this.props.remote}
         </Card.Body>
         <Card.Footer>
-          Closing footer here. Address? Contact info?
+          {this.props.location}
         </Card.Footer>
       </Card>
     )
