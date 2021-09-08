@@ -6,7 +6,7 @@ import { Carousel, Container, Jumbotron } from 'react-bootstrap'
 import charlieProfile from '../img/Profile-Pic.JPG'
 import zachProfile from '../img/Zachary Final.jpg'
 import quenProfile from '../img/Quen.JPG'
-// import philProfile from '../img/Profile-Pic.JPG'
+import philProfile from '../img/phil-pic.jpg'
 // import quenProfile from '../img/Profile-Pic.JPG'
 
 
@@ -51,12 +51,12 @@ class AboutUs extends React.Component {
             <Carousel.Item>
               <img
                 className="d-block w-100"
-                src={zachProfile}
+                src={philProfile}
                 alt="First slide"
               />
               <Carousel.Caption>
                 <h3>Phil Murphy</h3>
-                <p>Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.</p>
+                <p>Veteran, software developer, father of two daughters and a son on the way! I'm love golf, basketball, and playing soccer with my daughters. In my spare time I like to... nevermind, between CodeFellows and work I don't have spare time 🤪</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
