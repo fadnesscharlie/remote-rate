@@ -14,6 +14,7 @@ class AboutUs extends React.Component {
   render() {
     return (
       <>
+
         <Jumbotron className="mt-3 shadow-lg p-3 mb-5 rounded aboutUsJumbotron border">
           <h1>Remote Rate, Starring:</h1>
 
@@ -41,11 +42,14 @@ class AboutUs extends React.Component {
                 <h3>Charlie Fadness</h3>
                 <p>Problem Solver, debugger, helper, motivated by peoples growth
 
-                  Massage Therapist to Software Developer
+                 I love hiking, playing games, and watching anime, shows, and movies are some of my favorite things to do when I/'m not working.
+                Problem Solver, debugger, helper, motivated by peoples growth.
+      
+                Massage Therapist to Software Developer <br/>
 
-
-                  Cat Lover, problem solver, debugger
-                  I love to help others by teaching and seeing their growth</p>
+                Helping people has always been a thing I love to do! Seeing the joy you can bring to someone is always a wonderful thing. Knowing that I can do that with coding and help/teaching those around me to push ourselves will be something I look forward to!
+                </p>
+    
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -72,6 +76,7 @@ class AboutUs extends React.Component {
             </Carousel.Item>
           </Carousel>
         </Container>
+
       </>
     );
   }

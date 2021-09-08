@@ -2,6 +2,7 @@
   width: 100%;
   height: 60px;
   background:#F5F1E3;
+  margin-top: 10px;
 }
 
 .copyright {
@@ -15,7 +16,7 @@
 .contact {
   margin-top: 15px;
   font-size: large;
-  position: absolute;
+  position: fixed;
   display: inline-block;
   right: 0;
   margin-right: 10px;

@@ -110,6 +110,7 @@ class Profile extends React.Component {
       { latitude: lat, longitude: lon }
     )
     let distanceInMiles = distanceToWork / 1609
+    console.log('communte function',distanceInMiles)
 
     this.setState(prevState => ({
       userInfo: {
@@ -119,6 +120,8 @@ class Profile extends React.Component {
         workLon: lon,
       },
     }));
+
+    return Math.round(distanceInMiles);
   }
 
 
@@ -138,7 +141,7 @@ class Profile extends React.Component {
           homeLat: locationData.data.results[0].geometry.location.lat,
           homeLon: locationData.data.results[0].geometry.location.lng,
         },
-        addressToSearch: prevState.addressToSearch,
+        // addressToSearch: prevState.addressToSearch,
         showEditModal: prevState.showEditModal,
       }));
       // console.log('user info before sending to server:', this.state.userInfo);
@@ -173,7 +176,7 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         curEmployer: e.target.value,
       },
-      addressToSearch: prevState.addressToSearch,
+      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   }
@@ -184,7 +187,7 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         curSalary: e.target.value,
       },
-      addressToSearch: prevState.addressToSearch,
+      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -195,7 +198,7 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         curRemote: true,
       },
-      addressToSearch: prevState.addressToSearch,
+      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -208,7 +211,7 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         commuteDist: e.target.value,
       },
-      addressToSearch: prevState.addressToSearch,
+      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -219,7 +222,7 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         milesPerGal: e.target.value,
       },
-      addressToSearch: prevState.addressToSearch,
+      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -292,40 +295,50 @@ class Profile extends React.Component {
               <Card className="shadow-lg p-3 mb-5 bg-white rounded">
                 <Card.Header>
                   Your Current Information
-            </Card.Header>
+                </Card.Header>
                 <Card.Body>
                   <Col>
+                    Home Address: {this.state.addressToSearch}
+                    <br />
                     Employer: {this.state.userInfo.curEmployer}
                     <br />
                     Salary: ${this.state.userInfo.curSalary}
                     <br />
                     Remote: {this.state.userInfo.curRemote ? 'Yes' : 'No'}
-                    <br />
-                    Commute: {this.state.userInfo.commuteDist} miles
-              </Col>
+                  </Col>
                   <Col>
-                    <Button className="m-3" onClick={this.handleShowForm}>Edit User Info</Button>
-                    <Button className="m-3" variant='success' onClick={this.handleShowOfferForm}>New Offer</Button>
+                    <Button
+                      className="m-3"
+                      onClick={this.handleShowForm}>
+                      Edit User Info
+                    </Button>
+                    <Button
+                      className="m-3"
+                      variant='success'
+                      onClick={this.handleShowOfferForm}>
+                      New Offer
+                    </Button>
                   </Col>
                 </Card.Body>
                 <Card.Footer>
-                  {this.props.email}
+                  {/* {this.props.email} */}
                 </Card.Footer>
               </Card>
             </Col>
             <Col>
-                <CardColumns>
-              {this.state.userInfo.newJob.map(job => (
-                    <Offer
+              <CardColumns>
+                {this.state.userInfo.newJob.map(job => (
+                  <Offer
+
                     // deleteOffer={this.deleteOffer()}
-                      employer={job.newEmployer}
-                      salary={job.newSalary}
-                      remote={job.newRemote}
-                      location={job.newLocation} 
-                      // id={this.state._id}
-                      />
-              ))}
-                </CardColumns>
+                    employer={job.newEmployer}
+                    salary={job.newSalary}
+                    remote={job.newRemote}
+                    location={job.newLocation}
+                  // id={job._id}
+                  />
+                ))}
+              </CardColumns>
             </Col>
           </Row>
         </Container>
@@ -335,7 +348,10 @@ class Profile extends React.Component {
               <h2>Create New Profile</h2>
             </Modal.Header>
               <Modal.Body>
-                <Form className='form' onSubmit={this.getLocation}>
+                <Form
+                  className='form'
+                  onSubmit={this.getLocation}
+                >
                   <Form.Group>
                     <Form.Control
                       onChange={this.handleCityInput}
@@ -377,8 +393,8 @@ class Profile extends React.Component {
                       <option value='27.5'>25-30</option>
                       <option value='32.5'>30-35</option>
                       <option value='35'>35+</option>
-                  required
-                </Form.Control>
+                      required
+                    </Form.Control>
                   </Form.Group>
 
                   <Button
