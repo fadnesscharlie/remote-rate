@@ -48,14 +48,13 @@ class AboutUs extends React.Component {
             <Card.Body>
               <Card.Title>Charlie Fadness</Card.Title>
               <Card.Text>
-                Problem Solver, debugger, helper, motivated by peoples growth
+                I love hiking, playing games, and watching anime, shows, and movies are some of my favorite things to do when I'm not working. <br/>
+                Problem Solver, debugger, helper, motivated by peoples growth.
               </Card.Text>
               <Card.Text>
-                Massage Therapist to Software Developer
+                Massage Therapist to Software Developer <br/>
 
-                
-                Cat Lover, problem solver, debugger
-                I love to help others by teaching and seeing their growth
+                Helping people has always been a thing I love to do! Seeing the joy you can bring to someone is always a wonderful thing. Knowing that I can do that with coding and help/teaching those around me to push ourselves will be something I look forward to!
 
               </Card.Text>
             </Card.Body>

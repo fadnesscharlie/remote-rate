@@ -31,7 +31,7 @@ class Compare extends React.Component {
     // console.log('All data from server:', allData);
     allData.map(user => {
       if (user.email === this.state.email) {
-        console.log(user);
+        console.log('user in compare after get request', user);
         this.setState({
           userInfo: user,
           renderData: true,
@@ -39,6 +39,7 @@ class Compare extends React.Component {
           console.log('state has been set');
         });
       }
+      console.log('state after get in compare', this.state.userInfo)
       return user;
     })
   }
@@ -47,15 +48,15 @@ class Compare extends React.Component {
 
   // Create a function that will return the cost of a years worth of driving 
   annualGasCost = (distance, gasAPI, carMPG) => {
-    distance = 15
+    // distance = 15
     gasAPI = 3.50;
-    carMPG = 25;
+    // carMPG = 25;
 
     // 25 / 15
     // divide MPG with miles to work
     // That will tell us the amount of gallons of gas needed to drive to work
-    let gallonsPerTrip = carMPG / distance;
-
+    let gallonsPerTrip = distance / carMPG;
+    console.log('gallonsPerTrip', gallonsPerTrip)
     // Multiply that by 2 for to and from work
     // then get gas API, multiply gas API to gallons needed to drive
     // returned number will be cost of gas per day
@@ -71,8 +72,8 @@ class Compare extends React.Component {
 
   // Create a function that will compare the two salaries
   compareOffer = (offer1, offer2) => {
-    offer1 = 1000
-    offer2 = 2000
+    // offer1 = 1000
+    // offer2 = 2000
     // Take in both offer prices, return the difference
     let difference = offer1 - offer2;
     return difference;
@@ -123,47 +124,58 @@ class Compare extends React.Component {
       // </aside>
       <>
 
-          <Jumbotron className="p-3 mb-2 m-3 bg-secondary text-white" fluid>
-            <h1>Hello!</h1>
-            <p>
-              Select your Offers below to compare them!
-            </p>
-            <p>
-              <Button variant="primary">Learn more</Button>
-            </p>
-          </Jumbotron>
-          {this.state.renderData ?
-            <Container >
-              <Accordion className="m-4">
-                {this.state.userInfo.newJob.map((job, indx) => {
-                  return (
-                    <Card>
-                      <Accordion.Toggle as={Card.Header} eventKey={String(indx)}>
-                        {job.newEmployer}
-                      </Accordion.Toggle>
-                      <Accordion.Collapse eventKey={String(indx)}>
-                        <Card.Body>
-                          Net Gain from taking this position: {this.compareOffer(job.newSalary, this.state.userInfo.curSalary)}
-                          <br />
-                          New Salary: {job.newSalary}
-                          <br />
-                          New Job Location: {job.newLocation}
-                          <br />
-                          Remote? {job.remote ? 'Yes' : "No"}
-                          <br />
-                          Annual gas cost: {this.annualGasCost(job.newCommuteDist, 3.50, this.state.userInfo.milesPerGal)}
-                        </Card.Body>
+        <Jumbotron className="p-3 mb-2 m-3 bg-secondary text-white" fluid>
+          <h1>Hello!</h1>
+          <p>
+            Select your Offers below to compare them!
+          </p>
+          <p>
+            <Button variant="primary">Learn more</Button>
+          </p>
+        </Jumbotron>
+        {this.state.renderData ?
+          <Container >
+            <Accordion className="m-4">
+              {this.state.userInfo.newJob.map((job, indx) => {
+                return (
+                  <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey={String(indx)}>
+                      {job.newEmployer}
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey={String(indx)}>
+                      <Card.Body>
+                        Net Gain from taking this position: {this.compareOffer(job.newSalary, this.state.userInfo.curSalary)}
+                        <br />
+                        New Salary: ${job.newSalary}
+                        <br />
+                        New Job Location: {job.newLocation}
+                        <br />
+                        Remote: {job.newRemote ? 'Yes' : "No"}
+                        <br />
 
-                      </Accordion.Collapse>
+                        {job.newRemote ?
+                          '' :
+                          <>
+                            Annual gas cost: ${Math.round(this.annualGasCost(job.newCommuteDist, 3.50, this.state.userInfo.milesPerGal))}
+                            <br />
+                            New Commute Distance to Work:  {job.newCommuteDist} Miles
+                            <br />
+                            Your New commute will be between {job.newCommuteTime}
+                          </>
 
-                    </Card>
-                  )
-                })}
-              </Accordion>
-            </Container>
+                        }
+                      </Card.Body>
 
-            : ''}
+                    </Accordion.Collapse>
 
+                  </Card>
+                )
+              })}
+            </Accordion>
+          </Container>
+
+          : ''}
+        <footer className="footer"></footer>
       </>
     )
   }
