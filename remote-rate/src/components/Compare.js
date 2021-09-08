@@ -3,9 +3,8 @@ import '../css/Compare.css';
 import axios from 'axios';
 import { Accordion, Card, Button, Container } from 'react-bootstrap';
 import Jumbotron from 'react-bootstrap/Jumbotron'
-
-
-
+import Popover from 'react-bootstrap/Popover'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 class Compare extends React.Component {
   constructor(props) {
@@ -23,7 +22,6 @@ class Compare extends React.Component {
       console.log(err);
     }
   }
-
 
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
@@ -96,32 +94,18 @@ class Compare extends React.Component {
   }
 
   render() {
-    // console.log('Compare state:', this.state);
-    // Preset because no values when first passed in.
 
-    // compare offer takes in offer 1 and offer 2
-    // let difference = this.compareOffer(parseInt(this.props.userInfo.curSalary), 
-    // parseInt(this.props.userInfo.newJob.newSalary)
-    // 99999999
-    //   )
-
-    // annualGasCost takes in commute, gas, MPG
-    // let annualGas = this.annualGasCost(parseInt(this.props.userInfo.commuteDist), 3.50, parseInt(this.props.userInfo.milesPerGal))
-
-    // CompareRemote takes in results from above functions
-    // let comparedRemotely = this.compareRemote(difference, annualGas)
-
-
+    const popover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">How to see comparisons</Popover.Title>
+        <Popover.Content>
+          Click on your offered Company Name below to see the comparison from your profile.
+        </Popover.Content>
+      </Popover>
+    );
 
     return (
-      //   <aside>
-      //   Information from Compare:<br />
-      //   `Salary: ${this.state.userInfo.curSalary}`
-      //   `Commute Distance: ${this.state.userInfo.commuteDist}`
-      //   `MPG: ${this.state.userInfo.milesPerGal}`
-      //   `Remote: {this.state.userInfo.curRemote ? 'true' : 'false'}`
-      //   {console.log('remote?: ', this.state.userInfo.curRemote)}
-      // </aside>
+
       <>
 
         <Jumbotron className="p-3 mb-2 m-3 bg-secondary text-white" fluid>
@@ -130,7 +114,16 @@ class Compare extends React.Component {
             Select your Offers below to compare them!
           </p>
           <p>
-            <Button variant="primary">Learn more</Button>
+
+
+            <OverlayTrigger 
+            trigger="click"   
+            placement="right" 
+            overlay={popover}>
+              <Button 
+              className="bg-warning text-dark">
+                Click me compare!</Button>
+            </OverlayTrigger>
           </p>
         </Jumbotron>
         {this.state.renderData ?

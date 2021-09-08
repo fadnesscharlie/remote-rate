@@ -43,20 +43,18 @@ class OfferFormModal extends React.Component {
   }
 
   getDistanceTime = (commuteDist) => {
-    // hour many hours
-    let hours = commuteDist / 60
+    let totalCommute = commuteDist * 2
+
+    let hours = totalCommute / 60
     let hoursShortened = hours.toFixed(2);
-    // let hours2 = 60 / commuteDist
-    let minutes = 60 * hours
+
+    let minutes = 60 * hours 
     let minutesShortened = minutes.toFixed(2);
 
-
-
-
     if (minutes > 60) {
-      return `${hoursShortened/2} and ${hoursShortened} hours`
+      return `${hoursShortened/2*261} and ${hoursShortened*261} hours`
     } else {
-      return `${minutesShortened/2} and ${minutesShortened} minutes`
+      return `${minutesShortened/2*261} and ${minutesShortened*261} minutes`
     }
   }
   

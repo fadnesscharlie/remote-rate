@@ -33,7 +33,7 @@
 
 .containerAbout {
   border: brown solid 10px;
-  width: 13rem;
+  /* width: 13rem; */
 }
 
 .containerAbout:hover .overlay {
@@ -48,8 +48,25 @@
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+  /* overflow: scroll; */
 }
 
 .aboutUsJumbotron{
-  background-color: #ddd78d;
+  background-color: #ffc106;
+}
+
+.imageName {
+  font-size: 1.5em;
+}
+
+.bottomSpace {
+  margin-top: 100px;
+  /* height: 200px; */
+  display: block;
+  width: auto;
+  margin-left: 50%;
+}
+
+.starring {
+  text-align: center;
 }

@@ -72,3 +72,10 @@ border-radius: 4px;
 span {
   margin-left: 16px;
 }
+
+/* something is werid but it works 
+This is "Welcome to Remote Rate"*/
+.h1 {
+  text-align: center;
+  color: #DDDBCB;
+}

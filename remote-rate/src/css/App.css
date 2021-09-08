@@ -5,9 +5,13 @@
 .body {
   background-color: cornsilk;
   font-family: 'Playfair Display', serif;
-  height: auto;
+  /* height: auto; */
   /* width: 960px; */
 }
 .profileJumbotron{
   background-color: #189AAA;
+}
+
+.logInAlert {
+  
 }
