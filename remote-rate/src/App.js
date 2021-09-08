@@ -1,6 +1,6 @@
 import React from 'react';
 import './css/App.css';
-import Header from './components/Header.js';
+//import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 import Profile from './components/Profile.js';
 import Compare from './components/Compare.js';
