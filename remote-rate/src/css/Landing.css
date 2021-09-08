@@ -6,12 +6,22 @@ body {
 
 
 .sample {
-  background-color: darkkhaki;
+  background-color: #050505;
+  text-align: center;
+  /* max-width: max-content; */
+  margin-left: 200px;
+  margin: auto;
+  padding: 20px;
+  /* color: #050505; */
 }
 
 .h1 {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
+  position: fixed;
+  top: 0;
+  left: 30%;
 }
 
 .catchPhrase {
@@ -26,9 +36,17 @@ body {
 
 .catchWords {
   padding: 20px;
-  background-color: cornflowerblue;
+  font-size: 2em;
+  /* background-color: cornflowerblue; */
+  text-align: center;
 
 }
+
+.font-2 {
+  font-size: 2.2em;
+}
+
+
 
 .info {
   border: red 2px solid;
@@ -37,15 +55,75 @@ body {
   margin-left: auto;
   margin-right: auto;
   /* text-emphasis: bold; */
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .infoBox {
   font-size: 1.2em;
 
-  border: red 2px solid;
+  /* border: red 2px solid; */
   text-align: left;
   margin-left: auto;
   margin-right: auto;
   width:max-content;
+  margin-bottom: 200px;
+}
+
+.grey {
+  background-color: #DDDBCB;
+  color: #050505;
+
+}
+
+.blue {
+  background-color: #1B9AAA;
+  color: #050505;
+
+}
+
+.welcomeCard {
+  /* margin-bottom: 200px; */
+  padding: 20px;
+  
+}
+
+.bottomSpace {
+  margin-top: 100px;
+  /* height: 200px; */
+  display: block;
+  width: auto;
+  margin-left: 50%;
+}
+
+.bottomSpace2 {
+  margin-top: 40px;
+  /* height: 200px; */
+  display: block;
+  width: auto;
+  /* margin-left: 50%; */
+}
+
+.cardLeft {
+  display: inline-block;
+  position: relative;
+  bottom: -40px;
+  width: 40%;
+}
+
+.cardRight {
+  width: 40%;
+  display: inline-block;
+
+}
+
+.onceLogedIn {
+  font-size: 1.2em;
+  padding: 40px;
+  /* margin: 10px; */
+
+}
+
+.logInText {
+  padding: 30px;
+  text-align: center;
 }

@@ -6,9 +6,7 @@ import { Carousel, Container, Jumbotron } from 'react-bootstrap'
 import charlieProfile from '../img/Profile-Pic.JPG'
 import zachProfile from '../img/Zachary Final.jpg'
 import quenProfile from '../img/Quen.JPG'
-// import philProfile from '../img/Profile-Pic.JPG'
-// import quenProfile from '../img/Profile-Pic.JPG'
-
+import philProfile from '../img/phil-pic.jpg'
 
 class AboutUs extends React.Component {
   render() {
@@ -16,67 +14,78 @@ class AboutUs extends React.Component {
       <>
 
         <Jumbotron className="mt-3 shadow-lg p-3 mb-5 rounded aboutUsJumbotron border">
-          <h1>Remote Rate, Starring:</h1>
+          <h1 className="starring">Remote Rate, Starring:</h1>
 
         </Jumbotron>
         <Container>
           <Carousel className=" m-auto w-50">
-            <Carousel.Item>
+            <Carousel.Item className="containerAbout">
               <img
                 className="d-block w-100 min-vh-50"
                 src={zachProfile}
                 alt="First slide"
               />
-              <Carousel.Caption>
-                <h3>Zach Winterton</h3>
-                <p>Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.</p>
+              <Carousel.Caption className="overlay">
+
+                <p className="text"><span className="imageName">Zach Winterton</span><br /><br />
+                  Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.
+                </p>
               </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item className="containerAbout">
               <img
                 className="d-block w-100"
                 src={charlieProfile}
                 alt="First slide"
               />
-              <Carousel.Caption>
-                <h3>Charlie Fadness</h3>
-                <p>Problem Solver, debugger, helper, motivated by peoples growth
+              <Carousel.Caption className="overlay">
 
-                 I love hiking, playing games, and watching anime, shows, and movies are some of my favorite things to do when I/'m not working.
-                Problem Solver, debugger, helper, motivated by peoples growth.
-      
-                Massage Therapist to Software Developer <br/>
+                <p className="text">
+                  <span className="imageName">Charlie Fadness</span><br /><br />
 
-                Helping people has always been a thing I love to do! Seeing the joy you can bring to someone is always a wonderful thing. Knowing that I can do that with coding and help/teaching those around me to push ourselves will be something I look forward to!
+                  Problem Solver, debugger, helper, motivated by peoples growth
+
+                  I love hiking, playing games, and watching anime, shows, and movies are some of my favorite things to do when I'm not working.
+                  Problem Solver, debugger, helper, motivated by peoples growth.
+
+                  Massage Therapist to Software Developer <br />
+
+                  Helping people has always been a thing I love to do! Seeing the joy you can bring to someone is always a wonderful thing. Knowing that I can do that with coding and help/teaching those around me to push ourselves will be something I look forward to!
                 </p>
-    
+
               </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item className="containerAbout">
               <img
                 className="d-block w-100"
-                src={zachProfile}
+                src={philProfile}
                 alt="First slide"
               />
-              <Carousel.Caption>
-                <h3>Phil Murphy</h3>
-                <p>Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.</p>
+              <Carousel.Caption className="overlay">
+
+                <p className="text">
+                  <span className="imageName">Phil Murphy</span><br /><br />
+
+                  Veteran, software developer, father of two daughters and a son on the way! I'm love golf, basketball, and playing soccer with my daughters. In my spare time I like to... nevermind, between CodeFellows and work I don't have spare time 🤪.</p>
               </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item className="containerAbout">
               <img
                 className="d-block w-100"
                 src={quenProfile}
                 alt="First slide"
               />
-              <Carousel.Caption>
-                <h3>Quentin Young</h3>
-                <p>I grew up on a dairy farm in the hills of  Vermont. In 2013, I enlisted in the Navy directly after graduating from the University of New Hampshire. I\'ve always enjoyed math and logic. I decided to pursue software and not only start a career in development, but to pursue my masters in engineering. Outside of writing software I\'m a marathoner (Boston Marathon qualifier), mountaineer (Mt. Whitney, highest in lower 48), and skier! I\'m currently training for an Ultra Marathon in the Olympic mountains this fall.</p>
+              <Carousel.Caption className="overlay">
+
+                <p className="text">
+                  <span className="imageName">Quentin Young</span><br /><br />
+
+                  I grew up on a dairy farm in the hills of  Vermont. In 2013, I enlisted in the Navy directly after graduating from the University of New Hampshire. I've always enjoyed math and logic. I decided to pursue software and not only start a career in development, but to pursue my masters in engineering. Outside of writing software I'm a marathoner (Boston Marathon qualifier), mountaineer (Mt. Whitney, highest in lower 48), and skier! I'm currently training for an Ultra Marathon in the Olympic mountains this fall.</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
         </Container>
-
+        <div className="bottomSpace">.</div>
       </>
     );
   }
