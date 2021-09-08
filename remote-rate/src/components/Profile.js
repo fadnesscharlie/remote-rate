@@ -3,7 +3,6 @@ import Offer from './Offer';
 import OfferFormModal from './OfferFormModal';
 import { Form, Button, Modal, Card, Container, CardColumns, Jumbotron, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import Footer from './Footer'
 import getDistance from 'geolib/es/getDistance';
 
 class Profile extends React.Component {
@@ -248,19 +247,20 @@ class Profile extends React.Component {
     })
   }
 
-  // deleteOffer = async (id) => {
-  //   try {
-  //     await axios.delete(`${process.env.REACT_APP_BACKEND_SERVER}/profile/:${id}`)
-  //     let remainingOffers = this.state.userInfo.newJob.filter(offer => offer._id !== id);
-  //     this.setState({
-  //       userInfo: {
-  //         newJob: remainingOffers,
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  deleteOffer = async (user) => {
+    console.log('user within the delete', user._id);
+    try {
+      console.log('delete frontend hit');
+      // let remainingOffers = this.state.userInfo.newJob.filter(offer => offer._id !== user._id);
+      this.setState(prevState => ({
+        userInfo: user
+      }));
+      console.log(user._id);
+      await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/profile/${user._id}`, user)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // #################### POST ###########################
   handleEditUser = async (userData) => {
@@ -314,18 +314,19 @@ class Profile extends React.Component {
               </Card>
             </Col>
             <Col>
-                <CardColumns>
-              {this.state.userInfo.newJob.map(job => (
-                    <Offer
-                    // deleteOffer={this.deleteOffer()}
-                      employer={job.newEmployer}
-                      salary={job.newSalary}
-                      remote={job.newRemote}
-                      location={job.newLocation} 
-                      // id={this.state._id}
-                      />
-              ))}
-                </CardColumns>
+              <CardColumns>
+                {this.state.userInfo.newJob.map(job => (
+                  <Offer
+                    userInfo={this.state.userInfo}
+                    deleteOffer={this.deleteOffer}
+                    employer={job.newEmployer}
+                    salary={job.newSalary}
+                    remote={job.newRemote}
+                    location={job.newLocation}
+                    id={job._id}
+                  />
+                ))}
+              </CardColumns>
             </Col>
           </Row>
         </Container>

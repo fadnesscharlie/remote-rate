@@ -1,7 +1,5 @@
 import React from 'react';
 import '../css/AboutUs.css';
-import Card from 'react-bootstrap/Card'
-import CardDeck from 'react-bootstrap/CardDeck'
 import { Carousel, Container, Jumbotron } from 'react-bootstrap'
 import charlieProfile from '../img/Profile-Pic.JPG'
 import zachProfile from '../img/Zachary Final.jpg'
