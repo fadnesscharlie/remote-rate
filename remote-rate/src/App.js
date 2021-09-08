@@ -14,6 +14,7 @@ import {
   Route
 } from "react-router-dom";
 import Navbar from './components/Navbar';
+import Alert from 'react-bootstrap/Alert'
 
 class App extends React.Component {
   render() {
@@ -22,7 +23,7 @@ class App extends React.Component {
       <Container>
         <Router>
           <Navbar isAuthenticated={isAuthenticated} />
-          <Header />
+          {/* <Header /> */}
           <Switch>
             <Route exact path="/">
               {
@@ -42,7 +43,7 @@ class App extends React.Component {
                     <Landing />
                   </> :
                   <>
-                    <h2>Hello, please log in to access your offers and comparisons</h2>
+
                     <Landing />
                   </>
               }
@@ -56,7 +57,14 @@ class App extends React.Component {
                     <Profile email={user.email} name={user.name} />
                   </> :
                   <>
-                    <h2>Hello, please log in to access the Profile Page</h2>
+                    <Alert variant="danger">
+                      <Alert.Heading>Oh snap! You are not logged in!!</Alert.Heading>
+                      <p>
+                        Please Log in to access the contents of this page and start saving money!
+                      </p>
+                    </Alert>
+
+               
                     <Landing />
                   </>
               }
@@ -76,6 +84,12 @@ class App extends React.Component {
                     <Compare email={user.email} />
                   </> :
                   <>
+                    <Alert variant="danger">
+                      <Alert.Heading>Oh snap! You are not logged in!!</Alert.Heading>
+                      <p>
+                        Please Log in to access the contents of this page and start saving money!
+                      </p>
+                    </Alert>
                     <Landing />
                   </>
               }

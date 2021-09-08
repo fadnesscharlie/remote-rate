@@ -40,14 +40,16 @@ class Offer extends React.Component {
     };
     return (
       <Card>
+
         <Button onClick={this.handleClick} >Delete Offer </Button>
+
         <Card.Header>
           {this.props.employer}
         </Card.Header>
         <Card.Body>
           Salary: {this.props.salary}
           <br />
-          Remote: {this.props.remote}
+          Remote: {this.props.remote ? 'Yes' : 'No'}
         </Card.Body>
         <Card.Footer>
           {this.props.location}

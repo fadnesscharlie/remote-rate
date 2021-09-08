@@ -14,6 +14,7 @@ class OfferFormModal extends React.Component {
         newEmployer: 'Best Place of Work',
         newRemote: false,
         newCommuteDist: '',
+        newCommuteTime: '',
         newLocation: '',
         workLat: '',
         workLon: '',
@@ -32,6 +33,8 @@ class OfferFormModal extends React.Component {
       let lat = newLocationData.data.results[0].geometry.location.lat
       let lon = newLocationData.data.results[0].geometry.location.lng
       this.props.getWorkLocation2(lat, lon)
+      // console.log('commute logged before ',this.props.getWorkLocation2(lat, lon))
+
       return { lat, lon };
     } catch (err) {
 
@@ -39,6 +42,21 @@ class OfferFormModal extends React.Component {
     }
   }
 
+  getDistanceTime = (commuteDist) => {
+    let totalCommute = commuteDist * 2
+
+    let hours = totalCommute / 60
+    let hoursShortened = hours.toFixed(2);
+
+    let minutes = 60 * hours 
+    let minutesShortened = minutes.toFixed(2);
+
+    if (minutes > 60) {
+      return `${hoursShortened/2*261} and ${hoursShortened*261} hours`
+    } else {
+      return `${minutesShortened/2*261} and ${minutesShortened*261} minutes`
+    }
+  }
   
 
   handleSubmitOffer = async (e) => {
@@ -53,6 +71,10 @@ class OfferFormModal extends React.Component {
       Promise.resolve(dataObject).then(res => {
         lat = res.lat;
         lon = res.lon;
+        let newCommute = this.props.getWorkLocation2(lat, lon)
+        console.log('commute logged',newCommute)
+        let newCommuteTime = this.getDistanceTime(newCommute)
+        console.log('commute time logged',newCommuteTime)
         
         // console.log('Lat and Lon', lat, lon);
         let data = {
@@ -60,11 +82,12 @@ class OfferFormModal extends React.Component {
           newEmployer: this.state.offer.newEmployer,
           newRemote: this.state.offer.newRemote,
           newLocation: this.state.offer.newLocation,
-          newCommuteDist: this.state.offer.newCommuteDist,
+          newCommuteDist: newCommute,
+          newCommuteTime: newCommuteTime,
           workLat: lat,
           workLon: lon,
         }
-        // console.log('you mother', data)
+        console.log('you mother', data)
         // console.log('ID :',this.props.id)
         let sendMe = this.state.userInfo.newJob
         sendMe.push(data);
@@ -145,7 +168,7 @@ class OfferFormModal extends React.Component {
     this.setState(prevState => ({
       offer: {
         ...prevState.offer,
-        newCommuteDist: e.target.value,
+        newCommuteDist: this.state.commuteDist,
       },
       email: prevState.email,
     }));
@@ -158,12 +181,22 @@ class OfferFormModal extends React.Component {
         <Modal.Header>
         </Modal.Header>
         <Modal.Body>
-          <Form className='form' onSubmit={this.handleSubmitOffer}>
+          <Form 
+          className='form' 
+          onSubmit={this.handleSubmitOffer}
+          >
             <Form.Group>
+            <Form.Group>
+              <Form.Control 
+              onChange={this.handleNewLocation} 
+              type="text" 
+              placeholder="New Offers Address" 
+              />
+            </Form.Group>
               <Form.Control 
               onChange={this.handleNewEmployerInput} 
               type="text" 
-              placeholder="New Company Name" 
+              placeholder="New Offers Company Name" 
               required
               />
             </Form.Group>
@@ -171,7 +204,7 @@ class OfferFormModal extends React.Component {
               <Form.Control 
               onChange={this.handleNewSalaryInput} 
               type="text" 
-              placeholder="Offered Salary" 
+              placeholder="Offers Salary" 
               required
               />
             </Form.Group>
@@ -180,18 +213,23 @@ class OfferFormModal extends React.Component {
               onChange={this.handleIsNewRemote} 
               label="Remote Offer?" />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
 
-                <Form.Control onChange={this.handleCommuteDist} type="text" placeholder="Commute in Miles">
+                <Form.Control 
+                onChange={this.handleCommuteDist} 
+                type="text" 
+                placeholder="Commute in Miles">
                   
                 </Form.Control>
-              </Form.Group>
-            <Form.Group>
-              <Form.Control onChange={this.handleNewLocation} type="text" placeholder="New Offer Address" />
-
-            </Form.Group>
-            <Button variant="primary" type="submit">Submit</Button>
-            <Button variant="outline-danger" className="m-1" onClick={this.props.handleCloseOfferForm}>
+              </Form.Group> */}
+            <Button 
+            variant="primary" 
+            type="submit">
+              Submit</Button>
+            <Button 
+            variant="outline-danger" 
+            className="m-1" 
+            onClick={this.props.handleCloseOfferForm}>
               Close
             </Button>
           </Form>
