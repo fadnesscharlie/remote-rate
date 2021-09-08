@@ -1,12 +1,11 @@
 import React from 'react';
 import '../css/AboutUs.css';
-import Card from 'react-bootstrap/Card'
-import CardDeck from 'react-bootstrap/CardDeck'
 import { Carousel, Container, Jumbotron } from 'react-bootstrap'
 import charlieProfile from '../img/Profile-Pic.JPG'
 import zachProfile from '../img/Zachary Final.jpg'
 import quenProfile from '../img/Quen.JPG'
 import philProfile from '../img/phil-pic.jpg'
+
 
 class AboutUs extends React.Component {
   render() {
@@ -61,12 +60,14 @@ class AboutUs extends React.Component {
                 src={philProfile}
                 alt="First slide"
               />
+
               <Carousel.Caption className="overlay">
 
                 <p className="text">
                   <span className="imageName">Phil Murphy</span><br /><br />
 
                   Veteran, software developer, father of two daughters and a son on the way! I'm love golf, basketball, and playing soccer with my daughters. In my spare time I like to... nevermind, between CodeFellows and work I don't have spare time 🤪.</p>
+
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item className="containerAbout">
