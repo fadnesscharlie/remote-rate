@@ -2,9 +2,10 @@ import React from 'react';
 import '../css/AboutUs.css';
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck'
-
+import { Carousel, Container, Jumbotron } from 'react-bootstrap'
 import charlieProfile from '../img/Profile-Pic.JPG'
 import zachProfile from '../img/Zachary Final.jpg'
+import quenProfile from '../img/Quen.JPG'
 // import philProfile from '../img/Profile-Pic.JPG'
 // import quenProfile from '../img/Profile-Pic.JPG'
 
@@ -13,94 +14,69 @@ class AboutUs extends React.Component {
   render() {
     return (
       <>
-        <h1>Remote Rate Stars</h1>
 
-        <CardDeck className="imageRow">
+        <Jumbotron className="mt-3 shadow-lg p-3 mb-5 rounded aboutUsJumbotron border">
+          <h1>Remote Rate, Starring:</h1>
 
+        </Jumbotron>
+        <Container>
+          <Carousel className=" m-auto w-50">
+            <Carousel.Item>
+              <img
+                className="d-block w-100 min-vh-50"
+                src={zachProfile}
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>Zach Winterton</h3>
+                <p>Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={charlieProfile}
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>Charlie Fadness</h3>
+                <p>Problem Solver, debugger, helper, motivated by peoples growth
 
-          {/* Added CSS to Zach's Do we like it, and do we want to keep it?
-
-          If we want to keep it:
-          Add div around Card.Text
-          Add className="container" to Card
-          Add className="overlay" to Div
-          Add className="text" to Card.Text 
-          Finally Pick color for Overlay */}
-
-          <Card className="containerAbout">
-            <Card.Img className="profImg"  variant="top" src={zachProfile} />
-            <Card.Body >
-              <Card.Title>Zach Winterton</Card.Title>
-            <div className="overlay">
-              <Card.Text className="text">
-                Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.
-              </Card.Text>
-            </div>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Something Random?</small>
-            </Card.Footer>
-          </Card>
-
-
-          <Card>
-            <Card.Img className="profImg" variant="top" src={charlieProfile} />
-            <Card.Body>
-              <Card.Title>Charlie Fadness</Card.Title>
-              <Card.Text>
-                I love hiking, playing games, and watching anime, shows, and movies are some of my favorite things to do when I'm not working. <br/>
+                 I love hiking, playing games, and watching anime, shows, and movies are some of my favorite things to do when I/'m not working.
                 Problem Solver, debugger, helper, motivated by peoples growth.
-              </Card.Text>
-              <Card.Text>
+      
                 Massage Therapist to Software Developer <br/>
 
                 Helping people has always been a thing I love to do! Seeing the joy you can bring to someone is always a wonderful thing. Knowing that I can do that with coding and help/teaching those around me to push ourselves will be something I look forward to!
+                </p>
+    
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={zachProfile}
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>Phil Murphy</h3>
+                <p>Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={quenProfile}
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>Quentin Young</h3>
+                <p>I grew up on a dairy farm in the hills of  Vermont. In 2013, I enlisted in the Navy directly after graduating from the University of New Hampshire. I\'ve always enjoyed math and logic. I decided to pursue software and not only start a career in development, but to pursue my masters in engineering. Outside of writing software I\'m a marathoner (Boston Marathon qualifier), mountaineer (Mt. Whitney, highest in lower 48), and skier! I\'m currently training for an Ultra Marathon in the Olympic mountains this fall.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </Container>
 
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Something Random?</small>
-            </Card.Footer>
-          </Card>
-
-
-          {/* Makes them into two rows but can not get the size right */}
-
-          {/* </CardDeck>
-
-          <CardDeck className="imageRow"> */}
-
-          <Card>
-            <Card.Img className="profImg" variant="top" src={zachProfile} />
-            <Card.Body>
-              <Card.Title>Quentin Young</Card.Title>
-              <Card.Text>
-                Insert Elevator Pitch Summary
-              </Card.Text>
-              <Card.Text>
-                Insert Bio here
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Something Random?</small>
-            </Card.Footer>
-          </Card>
-          <Card>
-            <Card.Img className="profImg" variant="top" src={zachProfile} />
-            <Card.Body>
-              <Card.Title>Phil Murphy</Card.Title>
-              <Card.Text>
-                Insert Elevator Pitch Summary
-              </Card.Text>
-              <Card.Text>
-                Insert Bio here
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Something Random?</small>
-            </Card.Footer>
-          </Card>
-        </CardDeck>
       </>
     );
   }

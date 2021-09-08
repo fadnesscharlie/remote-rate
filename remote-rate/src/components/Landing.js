@@ -2,9 +2,7 @@ import React from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import '../css/Landing.css';
-
 import { Button, Spinner, Container, Card, Row, Col } from 'react-bootstrap'
-
 import Jumbotron from 'react-bootstrap/Jumbotron'
 
 

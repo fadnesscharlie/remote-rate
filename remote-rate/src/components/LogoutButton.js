@@ -7,7 +7,7 @@ const LogoutButton = () => {
   const {logout} = useAuth0();
 
   return (
-    <Button onClick={()=> logout({ returnTo: 'http://localhost:3000' })}>
+    <Button variant="warning" onClick={()=> logout({ returnTo: 'http://localhost:3000' })}>
       Log Out
     </Button>
   )
