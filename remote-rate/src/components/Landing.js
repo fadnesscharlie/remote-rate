@@ -1,12 +1,9 @@
 import React from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import Alert from 'react-bootstrap/Alert'
-import Header from './Header';
-import Footer from './Footer';
 import '../css/Landing.css';
 
-import { Button, Spinner, Container, Card } from 'react-bootstrap'
+import { Button, Spinner, Container, Card, Row, Col } from 'react-bootstrap'
 
 import Jumbotron from 'react-bootstrap/Jumbotron'
 
@@ -62,74 +59,56 @@ class Landing extends React.Component {
     } else {
       return (
         <Container className="vh-100">
-          <Header />
-          <h1 className='h1'>Welcome to Remote Rate</h1>
-
-          <Jumbotron fluid>
-            <section className="info">
-              We welcome you to explore the options of working fully remote! <br />
+          <Row>
+            <h1 className='h1'>Welcome to Remote Rate</h1>
+          </Row>
+          <Row>
+            <Col>
+            <Jumbotron >
+              <section className="info">
+                We welcome you to explore the options of working fully remote! <br />
               Here you will be able to compare your current work with your new work offer!<br />
 
-            </section>
-            <aside className="infoBox">
-              Things to look forward to:<br /> <br />
-
-              <p>You will be able to see the total miles you drive a year!</p>
-              <p>How much would you spend a year on gas</p>
-              <p>The difference between your offers</p>
-              <p>And the distance between your home and work</p>
-            </aside>
-          </Jumbotron>
+              </section>
+              <aside className="infoBox">
+                <Card>
+                  <Card.Header>Example Data</Card.Header>
+                  <Card.Body className="m-3">
+                    Home Address: 2901 3rd Ave #300, Seattle, WA 98121
+              </Card.Body>
+                  <Card.Footer>
+                    You can save: $500 Annually in gas costs
+              </Card.Footer>
+                </Card>
+              </aside>
+            </Jumbotron>
+            </Col>
+          </Row>
 
 
           {this.props.auth0.isAuthenticated ?
-            <Alert variant="info" className=" col-md-5 m-auto">
-              <Alert.Heading>Alert is authenticated </Alert.Heading>
-              <p>
-                If this is your first time here, head over to the profile page and enter your information!
-              </p>
-              <hr />
-              <p className="mb-0">
-                You can then compare your offers on the Compare page.
-              </p>
-            </Alert> : ''}
-
-
-          <Card className="sample m-3">
-
-          <section className="catchPhrase">
-            <p className="catchWords">
-
-              Get the money you deserve! Say it with me! It's my Money and I want it NOW!
-            </p>
-          </section>
-
-          </Card>
-          <Card>
-            <Card.Header>User: Remote Rate</Card.Header>
-            <Card.Body className="m-3">
-              Home Address: 2901 3rd Ave #300, Seattle, WA 98121
-              </Card.Body>
-              <Card.Footer>
-                You can save: $500 Annually in gas costs
-              </Card.Footer>
-          </Card>
-
-          < Footer />
-        </Container>
-        // Header goes here
-
-        // Log in button
-        // Once user is logged in, take them to their profile page
-
-        // Catchy Phrase here
-
-        // Create it visually appealing
-
-
-
-        // Footer goes here
-
+            <Row>
+              <Col>
+                <Card>
+                  <p>
+                    If this is your first time here, head over to the profile page and enter your information!
+                </p>
+                  <hr />
+                  <p className="mb-0">
+                    You can then compare your offers on the Compare page.
+                </p>
+                </Card>
+              </Col>
+              <Col>
+                <Card className="sample m-3">
+                  <p className="catchWords">
+                    Get the money you deserve! Say it with me! It's my Money and I want it NOW!
+                  </p>
+                </Card>
+              </Col>
+            </Row>
+            : ``}
+        </Container >
       )
     }
   }

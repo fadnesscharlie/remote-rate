@@ -3,7 +3,7 @@ import '../css/Compare.css';
 import axios from 'axios';
 import { Accordion, Card, Button, Container } from 'react-bootstrap';
 import Jumbotron from 'react-bootstrap/Jumbotron'
-import Footer from './Footer';
+
 
 
 
@@ -38,8 +38,8 @@ class Compare extends React.Component {
         }, () => {
           console.log('state has been set');
         });
-        return user;
       }
+      return user;
     })
   }
 
@@ -99,16 +99,16 @@ class Compare extends React.Component {
     // Preset because no values when first passed in.
 
     // compare offer takes in offer 1 and offer 2
-    let difference = this.compareOffer(parseInt(this.props.userInfo.curSalary), 
+    // let difference = this.compareOffer(parseInt(this.props.userInfo.curSalary), 
     // parseInt(this.props.userInfo.newJob.newSalary)
-    99999999
-      )
+    // 99999999
+    //   )
 
     // annualGasCost takes in commute, gas, MPG
-    let annualGas = this.annualGasCost(parseInt(this.props.userInfo.commuteDist), 3.50, parseInt(this.props.userInfo.milesPerGal))
+    // let annualGas = this.annualGasCost(parseInt(this.props.userInfo.commuteDist), 3.50, parseInt(this.props.userInfo.milesPerGal))
 
     // CompareRemote takes in results from above functions
-    let comparedRemotely = this.compareRemote(difference, annualGas)
+    // let comparedRemotely = this.compareRemote(difference, annualGas)
 
 
 
@@ -163,7 +163,6 @@ class Compare extends React.Component {
             </Container>
 
             : ''}
-        <Footer />
 
       </>
     )
