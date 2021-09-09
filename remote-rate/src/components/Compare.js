@@ -37,9 +37,6 @@ class Compare extends React.Component {
     })
   }
 
-  // ################################################################################################################################################
-
-  // Create a function that will return the cost of a years worth of driving 
   annualGasCost = (distance, gasAPI, carMPG) => {
     gasAPI = 3.50;
 
@@ -62,7 +59,6 @@ class Compare extends React.Component {
 
     let comparedCost = compare - annualCost;
 
-    // Math.sign returns a 1 or 0 if posstive or negative
     if (Math.sign(comparedCost) === 1) {
       return `You will save ${comparedCost} yearly by taking not driving into work`
     } else {
@@ -135,9 +131,7 @@ class Compare extends React.Component {
 
                         }
                       </Card.Body>
-
                     </Accordion.Collapse>
-
                   </Card>
                 )
               })}

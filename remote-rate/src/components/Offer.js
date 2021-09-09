@@ -14,7 +14,6 @@ class Offer extends React.Component {
   }
 
   handleClick = () => {
-    // Filter through new Jobs and returns back state after newJob is deleted
     let needle = this.props.userInfo.newJob.filter(job => job._id !== this.props.id);
     this.setState({
       userInfo: {
@@ -46,7 +45,13 @@ class Offer extends React.Component {
           Remote: {this.props.remote ? 'Yes' : 'No'}
         </Card.Body>
         <Card.Footer>
-          Current Location: {this.props.location}
+          {this.props.location}
+          <br />
+          <Button 
+          variant="outline-danger" 
+          onClick={this.handleClick} >
+            <i class="bi bi-trash"></i>
+            </Button>
         </Card.Footer>
       </Card>
     )
