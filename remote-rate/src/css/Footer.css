@@ -1,0 +1,24 @@
+.footer {
+  position: fixed;
+  width: 80vw;
+  height: 60px;
+  background:#F5F1E3;
+  margin-top: 10px;
+  bottom: 0;
+}
+
+.copyright {
+  font-size: large;
+  margin-top: 15px;
+  color: #1B9AAA;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.contact {
+  margin-top: 15px;
+  font-size: large;
+  position: fixed;
+  display: inline-block;
+  margin-left: 50vw;
+}

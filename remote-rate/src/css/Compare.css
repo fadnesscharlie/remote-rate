@@ -1,0 +1,53 @@
+.offer1 {
+  float: right;
+  background-image: url("../img/piggy-bank.jpg");
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-size: 400px 350px;
+  border: blue solid 4px;
+  margin: 50px;
+  /* margin-right: 50%; */
+  padding: 20px;
+  width: 400px;
+  height: 350px;
+  font-size: larger;
+}
+
+.offer10 {
+  /* opacity: .4; */
+  color: black;
+}
+
+.offer2 {
+  background-image: url("../img/piggy-bank.jpg");
+  background-repeat: no-repeat;
+  background-size: 400px 350px;
+  border: red solid 4px;
+  margin: 50px;
+  /* margin-left: 50%; */
+  padding: 20px;
+  width: 400px;
+  height: 350px;
+  color: black;
+  font-size: larger;
+}
+
+
+.summary {
+  border: green solid 4px;
+  margin: 50px;
+  margin-top: 5px;
+  padding: 20px;
+  font-size: larger;
+
+}
+
+/* .footer {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+  background:#24c431;
+  margin-top: 10px;
+} */
