@@ -4,13 +4,6 @@ import LogoutButton from './LogoutButton.js';
 import Login from './Login.js';
 import { Container, Row, Col } from 'react-bootstrap';
 
-
-// import NavDropdown from 'react-bootstrap/NavDropdown'
-// import Nav from 'react-bootstrap';
-
-
-// import './Header.css';
-
 class Header extends React.Component {
   render() {
     const { isAuthenticated } = this.props.auth0;
@@ -33,12 +26,4 @@ class Header extends React.Component {
     );
   }
 }
-// Nav Bar
-// Home, Profile, Compare, About
-// Drop down
-
-// Project Title
-
-// A home Icon or some sort
-// With a link to either home or profile page
 export default withAuth0(Header);

@@ -14,12 +14,8 @@ class Offer extends React.Component {
   }
 
   handleClick = () => {
+    // Filter through new Jobs and returns back state after newJob is deleted
     let needle = this.props.userInfo.newJob.filter(job => job._id !== this.props.id);
-    console.log('needle', needle);
-
-    console.log('userInfo: ', this.props.userInfo);
-    console.log('job ID', this.props.id);
-    console.log('state of userinfo', this.state.userInfo);
     this.setState({
       userInfo: {
         ...this.state.userInfo,
@@ -27,11 +23,9 @@ class Offer extends React.Component {
       },
       buttonClicked: true,
     })
-    // this.props.deleteOffer(this.state.userInfo, needle)
   }
 
   render() {
-    console.log('after changed state', this.state.userInfo);
     if (this.state.buttonClicked) {
       this.props.deleteOffer(this.state.userInfo);
       this.setState({
@@ -52,7 +46,7 @@ class Offer extends React.Component {
           Remote: {this.props.remote ? 'Yes' : 'No'}
         </Card.Body>
         <Card.Footer>
-          {this.props.location}
+          Current Location: {this.props.location}
         </Card.Footer>
       </Card>
     )

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/AboutUs.css';
 import { Carousel, Container, Jumbotron } from 'react-bootstrap'
-import charlieProfile from '../img/Profile-Pic.JPG'
+import charlieProfile from '../img/profile-Charlie-lanscape-theme.jpg'
 import zachProfile from '../img/Zachary Final.jpg'
 import quenProfile from '../img/Quen.JPG'
 import philProfile from '../img/phil-pic.jpg'
@@ -42,14 +42,11 @@ class AboutUs extends React.Component {
                 <p className="text">
                   <span className="imageName">Charlie Fadness</span><br /><br />
 
-                  Problem Solver, debugger, helper, motivated by peoples growth
+                  Massage Therapist to Software Developer <br /><br />
 
-                  I love hiking, playing games, and watching anime, shows, and movies are some of my favorite things to do when I'm not working.
-                  Problem Solver, debugger, helper, motivated by peoples growth.
+                  Hiking, playing games, watching anime, and movies are some of my favorite hobbies. Helping people has always been a thing I love to do! Seeing the joy and motivation you can bring to someone is always a wonderful knowing that I can do that with coding and help those around me to push ourselves will be something I look forward to!
+<br/>
 
-                  Massage Therapist to Software Developer <br />
-
-                  Helping people has always been a thing I love to do! Seeing the joy you can bring to someone is always a wonderful thing. Knowing that I can do that with coding and help/teaching those around me to push ourselves will be something I look forward to!
                 </p>
 
               </Carousel.Caption>

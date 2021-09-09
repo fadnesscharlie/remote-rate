@@ -1,6 +1,5 @@
 import React from 'react';
 import './css/App.css';
-import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 import Profile from './components/Profile.js';
 import Compare from './components/Compare.js';
@@ -23,7 +22,6 @@ class App extends React.Component {
       <Container>
         <Router>
           <Navbar isAuthenticated={isAuthenticated} />
-          {/* <Header /> */}
           <Switch>
             <Route exact path="/">
               {
@@ -43,7 +41,6 @@ class App extends React.Component {
                     <Landing />
                   </> :
                   <>
-
                     <Landing />
                   </>
               }
@@ -52,8 +49,6 @@ class App extends React.Component {
               {
                 isAuthenticated ?
                   <>
-
-                    {/* <h3>Welcome {user.given_name}</h3>  */}
                     <Profile email={user.email} name={user.name} />
                   </> :
                   <>
@@ -63,21 +58,11 @@ class App extends React.Component {
                         Please Log in to access the contents of this page and start saving money!
                       </p>
                     </Alert>
-
-               
                     <Landing />
                   </>
               }
-
-              {/* {isAuthenticated ?
-                <Profile email={user.email} name={user.name} /> :
-                <Profile email='youngqp3@gmail.com' />
-              } */}
             </Route>
-
             <Route exact path="/compare">
-
-
               {
                 isAuthenticated ?
                   <>
@@ -93,9 +78,7 @@ class App extends React.Component {
                     <Landing />
                   </>
               }
-
             </Route>
-
             <Route exact path="/aboutUs">
               {
                 isAuthenticated ?
@@ -106,14 +89,11 @@ class App extends React.Component {
                     <About />
                   </>
               }
-
             </Route>
           </Switch>
           <Footer />
         </Router>
-        {/* <h1>App</h1> */}
       </Container>
-      // Should only have components. No code is done here
     )
   }
 }

@@ -11,10 +11,7 @@ class Footer extends React.Component {
 
 
         <section className="contact">
-          {/* <a href="#"> */}
-
             Contact Us
-          {/* </a> */}
         </section>
 
       </footer>
