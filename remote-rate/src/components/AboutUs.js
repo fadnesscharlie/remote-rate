@@ -27,7 +27,7 @@ class AboutUs extends React.Component {
               <Carousel.Caption className="overlay">
 
                 <p className="text"><span className="imageName">Zach Winterton</span><br /><br />
-                  Veteran, software developer, stock trader. Jack of all trades master of none. I love living out in the boonies of Idaho. Hate dog and pony shows. Love to restore my house when I have the time.
+                  Veteran, software developer, stock trader. I also worked for a surveying and engineering firm for a while. I live in Idaho. Hobbies include fishing, cooking, landscaping. I like to work with my hands, I spend a lot of my free time restoring my home and learning a lot of the trades that go along with that. So I'm becoming a bit of a jack of all trades master of none, at least not yet.
                 </p>
               </Carousel.Caption>
             </Carousel.Item>

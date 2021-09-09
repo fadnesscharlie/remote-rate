@@ -1,6 +1,6 @@
 .footer {
   position: fixed;
-  width: 100%;
+  width: 80vw;
   height: 60px;
   background:#F5F1E3;
   margin-top: 10px;
@@ -20,6 +20,5 @@
   font-size: large;
   position: fixed;
   display: inline-block;
-  right: 0;
-  margin-right: 10px;
+  margin-left: 50vw;
 }

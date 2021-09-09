@@ -34,7 +34,7 @@ class Offer extends React.Component {
     return (
       <Card>
 
-        <Button onClick={this.handleClick} >Delete Offer </Button>
+        
 
         <Card.Header>
           {this.props.employer}
@@ -46,13 +46,16 @@ class Offer extends React.Component {
         </Card.Body>
         <Card.Footer>
           {this.props.location}
+
           <br />
           <Button 
           variant="outline-danger" 
           onClick={this.handleClick} >
             <i class="bi bi-trash"></i>
             </Button>
+
         </Card.Footer>
+        
       </Card>
     )
   }
