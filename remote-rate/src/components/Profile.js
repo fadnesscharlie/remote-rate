@@ -11,8 +11,7 @@ class Profile extends React.Component {
     this.state = {
       userInfo: {
         email: '',
-        // email: process.env.EMAIL,
-        homeLat: '', // preset numbers
+        homeLat: '', 
         homeLon: '',
         workLat: '',
         workLon: '',
@@ -33,22 +32,17 @@ class Profile extends React.Component {
   componentDidMount = async () => {
     try {
       await this.getUserData();
-      console.log('State', this.state);
     } catch (err) {
-      console.log(err);
+      console.log('Component Did Mount Error',err);
     }
   }
 
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
     const allData = response.data;
-    // console.log('All data from server:', allData);
     allData.map(user => {
       // Database user vs user logged in
-      console.log('user Response Data', user)
-      console.log('user email', this.props.email)
       if (user.email === this.props.email) {
-        console.log('user:', user);
         return this.setState({
           userInfo: user,
         });
@@ -58,58 +52,18 @@ class Profile extends React.Component {
   }
 
   updateStateForUs = (offer) => {
-    console.log('updateStateForUs', offer)
     let prevState = this.state
     prevState.userInfo.newJob.push(offer)
-    console.log('prevState ', prevState)
     this.setState = (prevState)
-
   }
-
-  componentDidUpdate = async () => {
-    // if statement to run and load state when something happens
-
-    // if (this.state.userInfo.newJob.length !== this.state.userInfo.newJob) {
-    //   await this.getUserData();
-
-    //   console.log('if statement ran component updated')
-    // }
-    // console.log('component updated after')
-
-    // call getUserData
-
-  }
-
-  // postNewOffer = async (offer) => {
-  //   try {
-  //     let response = await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/post-offers`, offer);
-  //     const newOffer = response.data;
-
-  //     this.setState({
-  //       userInfo: newJob = {
-  //         workLat: offer.lat,
-  //         workLon: offer.Lon
-  //       }
-  //     })
-
-
-  //   } catch (error) {
-  //     console.log('error in post', error)
-  //   }
-  // }
 
   getWorkLocation2 = (lat, lon) => {
-
-    // ############################################ 
-    // Changed set state!!!!
-
 
     let distanceToWork = getDistance(
       { latitude: this.state.userInfo.homeLat, longitude: this.state.userInfo.homeLon },
       { latitude: lat, longitude: lon }
     )
     let distanceInMiles = distanceToWork / 1609
-    console.log('communte function',distanceInMiles)
 
     this.setState(prevState => ({
       userInfo: {
@@ -130,7 +84,6 @@ class Profile extends React.Component {
     e.preventDefault();
     try {
       this.handleCloseForm();
-      // console.log('address to search:', this.state.addressToSearch);
       let locationData = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.addressToSearch}&key=${process.env.REACT_APP_GOOGLE_GEOCODE_API}`);
 
       this.setState(prevState => ({
@@ -140,19 +93,10 @@ class Profile extends React.Component {
           homeLat: locationData.data.results[0].geometry.location.lat,
           homeLon: locationData.data.results[0].geometry.location.lng,
         },
-        // addressToSearch: prevState.addressToSearch,
         showEditModal: prevState.showEditModal,
       }));
-      // console.log('user info before sending to server:', this.state.userInfo);
-
       this.handleEditUser(this.state.userInfo);
-
-      // console.log('user info after sending to server:', this.state.userInfo);
-
-      // this.getWorkLocation();
-
     } catch (err) {
-
       console.log(err);
     }
   }
@@ -165,7 +109,6 @@ class Profile extends React.Component {
       addressToSearch: e.target.value,
       showEditModal: prevState.showEditModal,
     }));
-    // console.log(this.state);
   };
 
   handleEmployerInput = (e) => {
@@ -175,7 +118,6 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         curEmployer: e.target.value,
       },
-      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   }
@@ -186,7 +128,6 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         curSalary: e.target.value,
       },
-      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -197,7 +138,6 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         curRemote: true,
       },
-      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -210,7 +150,6 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         commuteDist: e.target.value,
       },
-      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -221,7 +160,6 @@ class Profile extends React.Component {
         ...prevState.userInfo,
         milesPerGal: e.target.value,
       },
-      // addressToSearch: prevState.addressToSearch,
       showEditModal: prevState.showEditModal,
     }));
   };
@@ -232,7 +170,6 @@ class Profile extends React.Component {
   }
 
   handleShowOfferForm = () => {
-    // console.log('testing here');
     this.setState({
       showOfferModal: true,
     })
@@ -251,35 +188,26 @@ class Profile extends React.Component {
   }
 
   deleteOffer = async (user) => {
-    console.log('user within the delete', user._id);
     try {
-      console.log('delete frontend hit');
-      // let remainingOffers = this.state.userInfo.newJob.filter(offer => offer._id !== user._id);
       this.setState(prevState => ({
         userInfo: user
       }));
-      console.log(user._id);
       await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/profile/${user._id}`, user)
     } catch (error) {
       console.log(error);
     }
   }
 
-  // #################### POST ###########################
   handleEditUser = async (userData) => {
     try {
-      // console.log('Post to Update DB:', this.state.userInfo);
-      // let response = 
       await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/profile`, userData)
       this.getUserData()
-      // console.log(response);
     } catch (error) {
       console.log(error);
     }
   }
 
   render() {
-    // console.log('State function for lat and lon', this.state.userInfo.workLat, this.state.userInfo.workLon)
     return (
       <>
         <Container>
@@ -320,9 +248,7 @@ class Profile extends React.Component {
                     </Button>
                   </Col>
                 </Card.Body>
-                <Card.Footer>
-                  {/* {this.props.email} */}
-                </Card.Footer>
+
               </Card>
             </Col>
             <Col>
@@ -381,12 +307,6 @@ class Profile extends React.Component {
                       onChange={this.handleIsRemote}
                       label="Currently Working Remote?" />
                   </Form.Group>
-                  {/* <Form.Group>
-                <Form.Control 
-                onChange={this.handleCurCommute} 
-                type="text" 
-                placeholder="Current Commute in Miles" />
-              </Form.Group> */}
                   <Form.Group>
                     <Form.Control
                       onChange={this.handleMPG} as="select" >
@@ -404,7 +324,6 @@ class Profile extends React.Component {
                   <Button
                     variant="primary"
                     type="submit"
-                  // onClick={this.getLocation}
                   >Submit</Button>
                   <Button
                     variant="outline-danger"
@@ -415,8 +334,6 @@ class Profile extends React.Component {
                 </Form>
               </Modal.Body></Modal> : ''
         }
-
-
         {
           this.state.showOfferModal ?
             <OfferFormModal
@@ -426,37 +343,13 @@ class Profile extends React.Component {
               newJob={this.state.userInfo.newJob}
               showOfferModal={this.state.showOfferModal}
               handleCloseOfferForm={this.handleCloseOfferForm}
-              // userInfo={this.state.userInfo}
               getWorkLocation2={this.getWorkLocation2}
               handleEditUser={this.handleEditUser}
               updateStateForUs={this.updateStateForUs}
             />
             : ''
         }
-
-
-
       </>
-
-      // if user is logged in, show information
-      // If user logs out, take them back to the home page?
-      //    Or not show information
-
-      // Show their saved data.
-      //    If no saved data, create a sample?
-
-      // Saved Data includes
-      //    Offer: int,
-      //    MPG: int,
-      //    Remote or not: boolean,
-      //    Commute Distance: int,
-      //    email: string,
-      //    data from past offers: object,
-
-      // Show most recently selected Data from State
-      // Display thier savings from their selected offer
-
-
     )
   }
 }

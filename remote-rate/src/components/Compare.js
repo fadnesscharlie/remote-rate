@@ -26,66 +26,39 @@ class Compare extends React.Component {
   getUserData = async () => {
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/profile`);
     const allData = response.data;
-    // console.log('All data from server:', allData);
     allData.map(user => {
       if (user.email === this.state.email) {
-        console.log('user in compare after get request', user);
         this.setState({
           userInfo: user,
           renderData: true,
-        }, () => {
-          console.log('state has been set');
         });
       }
-      console.log('state after get in compare', this.state.userInfo)
       return user;
     })
   }
 
-  // ################################################################################################################################################
-
-  // Create a function that will return the cost of a years worth of driving 
   annualGasCost = (distance, gasAPI, carMPG) => {
-    // distance = 15
     gasAPI = 3.50;
-    // carMPG = 25;
 
-    // 25 / 15
-    // divide MPG with miles to work
-    // That will tell us the amount of gallons of gas needed to drive to work
     let gallonsPerTrip = distance / carMPG;
-    console.log('gallonsPerTrip', gallonsPerTrip)
-    // Multiply that by 2 for to and from work
-    // then get gas API, multiply gas API to gallons needed to drive
-    // returned number will be cost of gas per day
+
     let costPerDay = gallonsPerTrip * 2 * gasAPI;
 
-    // Days driving in a year 52 weeks x 5 days + 1 is 261 days working days a year
-    // multiple gas cost by 261 to return annual cost of driving per year to work and home
     let annualCost = costPerDay * 261;
     return annualCost;
   }
 
-  // ################################################################################################################################################
 
-  // Create a function that will compare the two salaries
   compareOffer = (offer1, offer2) => {
-    // offer1 = 1000
-    // offer2 = 2000
-    // Take in both offer prices, return the difference
     let difference = offer1 - offer2;
     return difference;
   }
 
-  // Comparing a remote vs non remote job
-  // This takes in two offers to compare, then the price of gas to drive to work
-  // ############# ---- Must have gas cost ------ ###############
+
   compareRemote = (compare, annualCost) => {
-    // take in the difference and minus the gas cost per year
-    // returns the difference in cost
+
     let comparedCost = compare - annualCost;
 
-    // Math.sign returns a 1 or 0 if posstive or negative
     if (Math.sign(comparedCost) === 1) {
       return `You will save ${comparedCost} yearly by taking not driving into work`
     } else {
@@ -153,14 +126,12 @@ class Compare extends React.Component {
                             <br />
                             New Commute Distance to Work:  {job.newCommuteDist} Miles
                             <br />
-                            Your New commute will be between {job.newCommuteTime}
+                            Your annual commute will be between {job.newCommuteTime}
                           </>
 
                         }
                       </Card.Body>
-
                     </Accordion.Collapse>
-
                   </Card>
                 )
               })}

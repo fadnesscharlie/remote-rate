@@ -15,11 +15,6 @@ class Offer extends React.Component {
 
   handleClick = () => {
     let needle = this.props.userInfo.newJob.filter(job => job._id !== this.props.id);
-    console.log('needle', needle);
-
-    console.log('userInfo: ', this.props.userInfo);
-    console.log('job ID', this.props.id);
-    console.log('state of userinfo', this.state.userInfo);
     this.setState({
       userInfo: {
         ...this.state.userInfo,
@@ -27,11 +22,9 @@ class Offer extends React.Component {
       },
       buttonClicked: true,
     })
-    // this.props.deleteOffer(this.state.userInfo, needle)
   }
 
   render() {
-    console.log('after changed state', this.state.userInfo);
     if (this.state.buttonClicked) {
       this.props.deleteOffer(this.state.userInfo);
       this.setState({
@@ -53,7 +46,14 @@ class Offer extends React.Component {
         </Card.Body>
         <Card.Footer>
           {this.props.location}
-          <Button variant="outline-danger" className="" onClick={this.handleClick} >Delete Offer </Button>
+
+          <br />
+          <Button 
+          variant="outline-danger" 
+          onClick={this.handleClick} >
+            <i class="bi bi-trash"></i>
+            </Button>
+
         </Card.Footer>
         
       </Card>

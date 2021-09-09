@@ -8,14 +8,9 @@ class Footer extends React.Component {
         <aside className="copyright">
           &copy;Remote Rate
         </aside>
-
-
-        <h3 className="contact">
-          {/* <a href="#"> */}
+        <section className="contact">
             Contact Us
-          {/* </a> */}
-        </h3>
-
+        </section>
       </footer>
     )
   }

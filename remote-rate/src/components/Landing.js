@@ -50,19 +50,15 @@ class Landing extends React.Component {
           <Row>
             <h1 className='
             h1 
-   
             p-3 
             mb-2 
             rounded
-            text-warning
-            
-            '>Welcome to Remote Rate</h1>
+            text-warning'>
+              Welcome to Remote Rate</h1>
           </Row>
           <Row 
           >
-            <Col
-            // className="sample"
-            >
+            <Col>
               <Jumbotron >
                 <Card className="sample m-3">
                   <p className="catchWords">
@@ -74,7 +70,6 @@ class Landing extends React.Component {
                       class="d-block p-2 blue text-white font-2">
                       It's my Money and I want it NOW!
                     </span>
-                    {/* Get the money you deserve! Say it with me! It's my Money and I want it NOW! */}
                   </p>
                 </Card>
                 
@@ -107,14 +102,12 @@ class Landing extends React.Component {
               <div className="bottomSpace2 ">Wow</div>
             </>
             :
-            // <Jumbotron >
               <aside className="infoBox">
                 <Card className="cardLeft">
                   <Card.Header>
                     To begin
                   </Card.Header>
                 <section 
-                // className="info"
                 className="welcomeCard"
                 >
                   We welcome you to explore the options of working fully remote! <br />
@@ -135,7 +128,6 @@ class Landing extends React.Component {
 
                 <div className="bottomSpace ">Wow</div>
               </aside>
-            // </Jumbotron>
           }
         </Container >
       )

@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
 import { Form, Button, Modal } from 'react-bootstrap';
-// import LogoutButton from './LogoutButton';
 
 class OfferFormModal extends React.Component {
   constructor(props) {
@@ -26,19 +24,17 @@ class OfferFormModal extends React.Component {
   }
 
   getNewLocation = async () => {
-    //  function will use city stored in state to search api with axios
+    // function will use city stored in state to search api with axios
     try {
-      // console.log('address to search:', this.state.offer.newLocation);
       let newLocationData = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.offer.newLocation}&key=${process.env.REACT_APP_GOOGLE_GEOCODE_API}`)
       let lat = newLocationData.data.results[0].geometry.location.lat
       let lon = newLocationData.data.results[0].geometry.location.lng
       this.props.getWorkLocation2(lat, lon)
-      // console.log('commute logged before ',this.props.getWorkLocation2(lat, lon))
 
       return { lat, lon };
     } catch (err) {
 
-      console.log(err);
+      console.log('get location error',err);
     }
   }
 
@@ -48,35 +44,24 @@ class OfferFormModal extends React.Component {
     let hours = totalCommute / 60
     let hoursShortened = hours.toFixed(2);
 
-    let minutes = 60 * hours 
-    let minutesShortened = minutes.toFixed(2);
+    return `${hoursShortened/2*261} and ${hoursShortened*261} hours`
 
-    if (minutes > 60) {
-      return `${hoursShortened/2*261} and ${hoursShortened*261} hours`
-    } else {
-      return `${minutesShortened/2*261} and ${minutesShortened*261} minutes`
-    }
   }
   
 
   handleSubmitOffer = async (e) => {
     this.props.handleCloseOfferForm();
     e.preventDefault();
-    // console.log('This.state.offer before data push',this.state.offer);
     try {
       let lat;
       let lon;
       let dataObject = this.getNewLocation();
-      // console.log('data object', dataObject);
       Promise.resolve(dataObject).then(res => {
         lat = res.lat;
         lon = res.lon;
         let newCommute = this.props.getWorkLocation2(lat, lon)
-        console.log('commute logged',newCommute)
         let newCommuteTime = this.getDistanceTime(newCommute)
-        console.log('commute time logged',newCommuteTime)
         
-        // console.log('Lat and Lon', lat, lon);
         let data = {
           newSalary: this.state.offer.newSalary,
           newEmployer: this.state.offer.newEmployer,
@@ -87,21 +72,13 @@ class OfferFormModal extends React.Component {
           workLat: lat,
           workLon: lon,
         }
-        console.log('you mother', data)
-        // console.log('ID :',this.props.id)
         let sendMe = this.state.userInfo.newJob
         sendMe.push(data);
-        console.log('SEND ME BUDDY', this.state.userInfo);
         axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/newoffer/${this.state.offer.id}`, this.state.userInfo)
-        
-        // this.updateStateForUs(data)
-        // this.props.handleEditUser(this.props.userInfo)
 
       }).then(res => {
         this.getUserData();
-        console.log(`Success`, res);
       })
-      // console.log('handle edit user state' ,this.state.offer);
     } catch (error) {
       console.log(error);
     }
@@ -175,7 +152,6 @@ class OfferFormModal extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
     return (
       <Modal show={this.props.showOfferModal}>
         <Modal.Header>
@@ -213,15 +189,6 @@ class OfferFormModal extends React.Component {
               onChange={this.handleIsNewRemote} 
               label="Remote Offer?" />
             </Form.Group>
-            {/* <Form.Group>
-
-                <Form.Control 
-                onChange={this.handleCommuteDist} 
-                type="text" 
-                placeholder="Commute in Miles">
-                  
-                </Form.Control>
-              </Form.Group> */}
             <Button 
             variant="primary" 
             type="submit">
